@@ -1,0 +1,2825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Consulting Playbook — A Living Framework Repository</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0F1C2E;
+    --navy-mid: #1A2F47;
+    --navy-light: #243B55;
+    --gold: #C9A84C;
+    --gold-light: #E8C87A;
+    --cream: #F8F6F1;
+    --cream-dark: #EDE9E0;
+    --slate: #4A5568;
+    --slate-light: #718096;
+    --white: #FFFFFF;
+    --green: #2D6A4F;
+    --green-light: #40916C;
+    --amber: #9C6B2C;
+    --red-soft: #8B3A3A;
+    --purple: #553C7B;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy);
+    color: var(--cream);
+    min-height: 100vh;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    background: var(--navy);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--cream);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .notebook-tag {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.4);
+    padding: 3px 10px;
+    border-radius: 2px;
+  }
+
+  .last-updated {
+    font-size: 0.72rem;
+    color: var(--slate-light);
+    letter-spacing: 0.02em;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    padding: 5rem 2rem 3.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+  }
+
+  .hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--cream);
+    margin-bottom: 1.25rem;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--gold);
+  }
+
+  .hero p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: rgba(248,246,241,0.65);
+    max-width: 580px;
+    margin: 0 auto 2rem;
+  }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 2rem;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--slate-light);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ─── CATEGORY NAV ─── */
+  .cat-nav {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1.5rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .cat-btn {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 8px 18px;
+    border: 1px solid rgba(248,246,241,0.15);
+    border-radius: 3px;
+    background: transparent;
+    color: rgba(248,246,241,0.55);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .cat-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .cat-btn.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--navy);
+  }
+
+  .search-wrap {
+    margin-left: auto;
+    position: relative;
+  }
+
+  .search-input {
+    background: rgba(248,246,241,0.06);
+    border: 1px solid rgba(248,246,241,0.12);
+    border-radius: 3px;
+    padding: 8px 14px 8px 36px;
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    width: 220px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-input::placeholder { color: var(--slate-light); }
+  .search-input:focus { border-color: var(--gold); }
+
+  .search-icon {
+    position: absolute;
+    left: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--slate-light);
+    font-size: 0.85rem;
+  }
+
+  /* ─── MAIN LAYOUT ─── */
+  .main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem 5rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .section-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 2px;
+  }
+
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--cream);
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: rgba(248,246,241,0.08);
+  }
+
+  /* Category colors */
+  .cat-entry .section-label { background: rgba(201,168,76,0.15); color: var(--gold); }
+  .cat-implementation .section-label { background: rgba(45,106,79,0.2); color: #52B788; }
+  .cat-evaluation .section-label { background: rgba(85,60,123,0.2); color: #A78BDA; }
+  .cat-scaleup .section-label { background: rgba(156,107,44,0.2); color: #E09F3E; }
+  .cat-monitoring .section-label { background: rgba(139,58,58,0.15); color: #E07A7A; }
+  .cat-caseinterview .section-label { background: rgba(30,80,120,0.25); color: #7BB8E8; }
+
+  /* ─── FRAMEWORK GRID ─── */
+  .fw-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1px;
+    background: rgba(248,246,241,0.06);
+    border: 1px solid rgba(248,246,241,0.06);
+    margin-bottom: 0.5rem;
+  }
+
+  .fw-card {
+    background: var(--navy-mid);
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fw-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .fw-card:hover { background: var(--navy-light); }
+  .fw-card:hover::before { opacity: 1; }
+  .fw-card.open { background: var(--navy-light); }
+  .fw-card.open::before { opacity: 1; }
+  .fw-card:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+
+  .cat-entry .fw-card::before { background: var(--gold); }
+  .cat-implementation .fw-card::before { background: #52B788; }
+  .cat-evaluation .fw-card::before { background: #A78BDA; }
+  .cat-scaleup .fw-card::before { background: #E09F3E; }
+  .cat-monitoring .fw-card::before { background: #E07A7A; }
+  .cat-caseinterview .fw-card::before { background: #7BB8E8; }
+
+  .fw-type {
+    font-size: 0.67rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+    opacity: 0.65;
+  }
+
+  .start-badge {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--navy);
+    background: var(--gold);
+    padding: 2px 8px;
+    border-radius: 2px;
+    display: inline-block;
+    margin-bottom: 0.6rem;
+    margin-right: 0.5rem;
+  }
+
+  .fw-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+  }
+
+  .fw-short {
+    font-size: 0.8rem;
+    color: var(--slate-light);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+
+  .fw-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .tag {
+    font-size: 0.67rem;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 2px;
+    background: rgba(248,246,241,0.07);
+    color: rgba(248,246,241,0.5);
+    letter-spacing: 0.03em;
+  }
+
+  .fw-arrow {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--slate-light);
+    transition: transform 0.2s, color 0.2s;
+  }
+
+  .fw-card.open .fw-arrow {
+    transform: rotate(90deg);
+    color: var(--gold);
+  }
+
+  /* ─── DETAIL PANEL ─── */
+  .fw-detail {
+    display: none;
+    background: var(--navy-light);
+    border-top: 1px solid rgba(248,246,241,0.08);
+    padding: 2rem;
+    grid-column: 1 / -1;
+  }
+
+  .fw-detail.open { display: block; }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 700px) {
+    .detail-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; }
+    .fw-grid { grid-template-columns: 1fr; }
+  }
+
+  .detail-block h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+
+  .detail-block p, .detail-block li {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: rgba(248,246,241,0.75);
+  }
+
+  .detail-block ul, .detail-block ol {
+    padding-left: 1.25rem;
+  }
+
+  .detail-block li { margin-bottom: 0.3rem; }
+
+  .steps-list {
+    counter-reset: steps;
+    list-style: none;
+    padding: 0;
+  }
+
+  .steps-list li {
+    counter-increment: steps;
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 0.6rem;
+    align-items: flex-start;
+  }
+
+  .steps-list li::before {
+    content: counter(steps);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--navy);
+    background: var(--gold);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* ─── PRACTICE MODE ─── */
+  .practice-section {
+    margin-top: 1.5rem;
+    border-top: 1px solid rgba(248,246,241,0.08);
+    padding-top: 1.5rem;
+  }
+
+  .practice-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .practice-badge {
+    font-size: 0.67rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: rgba(201,168,76,0.15);
+    color: var(--gold);
+    padding: 3px 10px;
+    border-radius: 2px;
+  }
+
+  .practice-header h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--cream);
+  }
+
+  .practice-scenario {
+    background: rgba(248,246,241,0.04);
+    border: 1px solid rgba(248,246,241,0.1);
+    border-radius: 4px;
+    padding: 1rem 1.25rem;
+    font-size: 0.85rem;
+    line-height: 1.65;
+    color: rgba(248,246,241,0.8);
+    margin-bottom: 0.85rem;
+    font-style: italic;
+  }
+
+  .practice-input {
+    width: 100%;
+    background: rgba(248,246,241,0.05);
+    border: 1px solid rgba(248,246,241,0.12);
+    border-radius: 4px;
+    padding: 0.85rem 1rem;
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    resize: vertical;
+    min-height: 90px;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 0.75rem;
+  }
+
+  .practice-input:focus { border-color: var(--gold); }
+  .practice-input::placeholder { color: var(--slate-light); }
+
+  .practice-btn {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 9px 22px;
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: background 0.2s;
+  }
+
+  .practice-btn:hover { background: var(--gold-light); }
+  .practice-btn:disabled { opacity: 0.5; cursor: wait; }
+
+  .ai-response {
+    margin-top: 1rem;
+    background: rgba(201,168,76,0.06);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px;
+    padding: 1rem 1.25rem;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: rgba(248,246,241,0.85);
+    display: none;
+  }
+
+  .ai-response.visible { display: block; }
+
+  .ai-response-label {
+    font-size: 0.67rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+
+  /* ─── DIVIDER ─── */
+  .section-divider {
+    height: 1px;
+    background: rgba(248,246,241,0.05);
+    margin: 3rem 0 0;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid rgba(248,246,241,0.07);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--slate-light);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  footer a { color: var(--gold); text-decoration: none; }
+
+  .context-banner {
+    padding: 1rem 1.5rem;
+    background: rgba(201,168,76,0.06);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: rgba(248,246,241,0.7);
+  }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <span class="logo-dot"></span>
+    The Consulting Playbook
+  </div>
+  <div class="header-right">
+    <span class="notebook-tag">Living Notebook</span>
+    <span class="last-updated">Last updated June 2026</span>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-eyebrow">A Framework Repository for Consulting Practice</p>
+  <h1>The tools that make<br><em>complex problems</em> tractable</h1>
+  <p>A curated, practitioner-oriented collection of consulting frameworks — from problem structuring to impact measurement. Built to be used, not just read. Each framework includes a practice scenario with AI feedback.</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">31</span>
+      <span class="stat-label">Frameworks</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">6</span>
+      <span class="stat-label">Categories</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">AI</span>
+      <span class="stat-label">Practice Mode</span>
+    </div>
+  </div>
+  <div class="context-banner" style="margin-top: 2.5rem; max-width: 700px; margin-left: auto; margin-right: auto; text-align: left;">
+    <strong style="color: var(--gold);">New to this notebook?</strong> Start with <strong>MECE</strong> (marked below) — nearly every other framework here either builds on it or assumes you can already structure a problem cleanly. From there: <strong>Issue Tree → Hypothesis-Driven Thinking → Pyramid Principle</strong> gives you the core consulting "thinking → testing → communicating" loop before you touch anything sector-specific.
+  </div>
+</div>
+
+<!-- CATEGORY NAV -->
+<div class="cat-nav">
+  <button class="cat-btn active" onclick="filterCat('all', this)">All Frameworks</button>
+  <button class="cat-btn" onclick="filterCat('entry', this)">Entering Consulting</button>
+  <button class="cat-btn" onclick="filterCat('implementation', this)">Implementation</button>
+  <button class="cat-btn" onclick="filterCat('evaluation', this)">Evaluation</button>
+  <button class="cat-btn" onclick="filterCat('scaleup', this)">Scale-Up</button>
+  <button class="cat-btn" onclick="filterCat('monitoring', this)">Monitoring & Impact</button>
+  <button class="cat-btn" onclick="filterCat('caseinterview', this)">Case Interviews</button>
+  <div class="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input type="text" class="search-input" placeholder="Search frameworks..." oninput="searchFrameworks(this.value)">
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- ═══════════════════════════════════
+       SECTION 1: ENTERING CONSULTING
+  ══════════════════════════════════════ -->
+  <div class="section-header cat-entry" data-cat="entry">
+    <span class="section-label">Entry</span>
+    <span class="section-title">Entering Consulting</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="context-banner" data-cat="entry" style="margin-bottom: 1.5rem;">
+    These frameworks assume you already have raw information to structure. Getting that information is its own skill — document review, stakeholder interviews, direct observation. There's no clever framework for it, just rigour and curiosity. What follows are the tools for making sense of what you've gathered, not for gathering it.
+  </div>
+
+  <div class="fw-grid cat-entry" data-cat="entry">
+
+    <!-- MECE -->
+    <div class="fw-card" onclick="toggleCard(this, 'mece-detail')" data-name="MECE Principle" data-tags="structuring problem-solving logic">
+      <span class="fw-arrow">›</span>
+      <span class="start-badge">Start Here</span>
+      <div class="fw-type">Problem Structuring</div>
+      <div class="fw-name">MECE Principle</div>
+      <div class="fw-short">Mutually Exclusive, Collectively Exhaustive — the bedrock logic for clean problem decomposition.</div>
+      <div class="fw-tags">
+        <span class="tag">McKinsey</span>
+        <span class="tag">Logic</span>
+        <span class="tag">Structuring</span>
+      </div>
+    </div>
+    <div class="fw-detail" id="mece-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>What it is</h4>
+          <p>MECE (mee-see) is a principle for organising information and ideas so that categories are <strong>Mutually Exclusive</strong> (no overlap) and <strong>Collectively Exhaustive</strong> (no gaps). Developed at McKinsey, it's the foundation of clean issue trees and structured thinking.</p>
+        </div>
+        <div class="detail-block">
+          <h4>When to use it</h4>
+          <ul>
+            <li>Breaking down a client problem into workable parts</li>
+            <li>Structuring slide storylines and recommendations</li>
+            <li>Designing interview guides and data collection plans</li>
+            <li>Checking whether your hypotheses cover the full problem space</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>How to apply it</h4>
+          <ol class="steps-list">
+            <li>State the core question clearly in one sentence</li>
+            <li>Brainstorm all possible "buckets" that answer or explain it</li>
+            <li>Check overlap — can any item belong to two buckets? If yes, restructure</li>
+            <li>Check completeness — is there any possible answer not covered?</li>
+            <li>Group remaining items and label each bucket at the same level of abstraction</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>Common pitfalls</h4>
+          <ul>
+            <li>Mixing levels (e.g. "Revenue" vs "Sales team performance" — not the same level)</li>
+            <li>Confusing MECE structure with a story — MECE organises, narrative persuades</li>
+            <li>Creating too many top-level buckets (3–5 is usually optimal)</li>
+            <li>Forcing MECE when the problem is genuinely messy — acknowledge this</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> A retail bank is seeing declining profits. Your partner asks you to structure the problem. Using MECE, break this into its top-level buckets and explain why your categories are mutually exclusive and collectively exhaustive.
+        </div>
+        <textarea class="practice-input" placeholder="Write your MECE breakdown here. Think: what are the 3–5 top-level drivers of profit for a retail bank? Check each for overlap and completeness before you write..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'mece')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-mece">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Issue Tree -->
+    <div class="fw-card" onclick="toggleCard(this, 'issuetree-detail')" data-name="Issue Tree" data-tags="structuring diagnosis decomposition">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Problem Structuring</div>
+      <div class="fw-name">Issue Tree</div>
+      <div class="fw-short">A visual logic map that breaks a big question into smaller answerable sub-questions, driving to root cause.</div>
+      <div class="fw-tags">
+        <span class="tag">Diagnosis</span>
+        <span class="tag">Root Cause</span>
+        <span class="tag">Visual</span>
+      </div>
+    </div>
+    <div class="fw-detail" id="issuetree-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>What it is</h4>
+          <p>An issue tree is a hierarchical diagram that decomposes a problem statement into increasingly specific sub-questions. The top node is your key question; each branch breaks it into MECE sub-issues until you reach answerable, testable hypotheses.</p>
+        </div>
+        <div class="detail-block">
+          <h4>Two types</h4>
+          <ul>
+            <li><strong>Diagnostic tree:</strong> "Why is this happening?" — decomposes causes</li>
+            <li><strong>Solution tree:</strong> "How do we fix this?" — decomposes options</li>
+          </ul>
+          <p style="margin-top:0.5rem">Most real projects use both: diagnose first, then solution-tree the response.</p>
+        </div>
+        <div class="detail-block">
+          <h4>How to build one</h4>
+          <ol class="steps-list">
+            <li>Write the key question in a box on the far left</li>
+            <li>Draw 3–5 branches: the major categories of explanation or solution</li>
+            <li>For each branch, ask "what are the sub-components of this?" and branch again</li>
+            <li>Continue until each leaf node is a testable hypothesis</li>
+            <li>Prioritise branches: which are most likely to be the answer? Start there</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>Consulting application</h4>
+          <ul>
+            <li>Use at the start of every project to align the team on scope</li>
+            <li>Share with the client as a "here's how we're thinking about this" moment</li>
+            <li>Update as you learn — prune dead branches, deepen live ones</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> A hospital network asks you why patient satisfaction scores have dropped 18% in 12 months. Build the first two levels of a diagnostic issue tree. List your top-level branches (Level 1) and the sub-questions under at least two of them (Level 2).
+        </div>
+        <textarea class="practice-input" placeholder="Start with: 'Why have patient satisfaction scores dropped?' Then branch into major categories..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'issuetree')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-issuetree">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hypothesis-Driven Thinking -->
+    <div class="fw-card" onclick="toggleCard(this, 'hypothesis-detail')" data-name="Hypothesis-Driven Thinking" data-tags="approach methodology efficiency">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Consulting Approach</div>
+      <div class="fw-name">Hypothesis-Driven Thinking</div>
+      <div class="fw-short">Start with an answer, prove it wrong. The consulting alternative to exhaustive research.</div>
+      <div class="fw-tags">
+        <span class="tag">Efficiency</span>
+        <span class="tag">Mindset</span>
+        <span class="tag">McKinsey Way</span>
+      </div>
+    </div>
+    <div class="fw-detail" id="hypothesis-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>What it is</h4>
+          <p>Rather than conducting exhaustive research before forming a view, hypothesis-driven consulting starts with a best guess (the hypothesis) and then tests it efficiently. This keeps work focused, avoids boiling the ocean, and allows early communication of direction to clients.</p>
+        </div>
+        <div class="detail-block">
+          <h4>The mindset shift</h4>
+          <ul>
+            <li><strong>Academic:</strong> "Let me gather all the data, then form a conclusion"</li>
+            <li><strong>Consulting:</strong> "Here's our best hypothesis. What's the fastest way to prove it wrong?"</li>
+          </ul>
+          <p style="margin-top:0.5rem">You're not being intellectually lazy — you're being directionally efficient.</p>
+        </div>
+        <div class="detail-block">
+          <h4>The cycle</h4>
+          <ol class="steps-list">
+            <li>Form a clear hypothesis: "We believe the problem is X because Y"</li>
+            <li>Identify the 2–3 facts that would prove it wrong (kill criteria)</li>
+            <li>Go collect only those facts first</li>
+            <li>If the hypothesis survives, deepen. If it dies, revise and repeat</li>
+            <li>Document what you learned at each step</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>In a client context</h4>
+          <ul>
+            <li>Share your hypothesis with the client early — it builds confidence and surfaces their knowledge</li>
+            <li>Frame updates as "our hypothesis has evolved" — shows rigour, not flip-flopping</li>
+            <li>The final recommendation should trace back to a clear initial hypothesis that either held or was refined</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> You're joining a project on Day 1. The client is a logistics company with rising operational costs. You have 30 minutes before meeting the CEO. Write one clear hypothesis about the root cause, and list the 2–3 pieces of evidence you'd want to look at first to test it.
+        </div>
+        <textarea class="practice-input" placeholder="Hypothesis: 'We believe operational costs are rising primarily because...' Then list your kill criteria..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'hypothesis')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-hypothesis">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pyramid Principle -->
+    <div class="fw-card" onclick="toggleCard(this, 'pyramid-detail')" data-name="Pyramid Principle" data-tags="communication storytelling structure writing">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Communication</div>
+      <div class="fw-name">The Pyramid Principle</div>
+      <div class="fw-short">Answer first, support second. Barbara Minto's framework for executive communication.</div>
+      <div class="fw-tags">
+        <span class="tag">Writing</span>
+        <span class="tag">Slides</span>
+        <span class="tag">SCQA</span>
+      </div>
+    </div>
+    <div class="fw-detail" id="pyramid-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>What it is</h4>
+          <p>The Pyramid Principle (Barbara Minto, McKinsey 1987) holds that communication should lead with the conclusion, then support it with grouped arguments, then support each argument with data. The opposite of academic writing — and the backbone of consulting slide decks.</p>
+        </div>
+        <div class="detail-block">
+          <h4>SCQA structure</h4>
+          <ul>
+            <li><strong>Situation:</strong> Neutral facts about the current state (agree on context)</li>
+            <li><strong>Complication:</strong> What has changed or is at risk (why this matters now)</li>
+            <li><strong>Question:</strong> The question the complication raises</li>
+            <li><strong>Answer:</strong> Your recommendation — delivered before the supporting argument</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Building the pyramid</h4>
+          <ol class="steps-list">
+            <li>Write your governing thought (the single recommendation in one sentence)</li>
+            <li>Identify 3 key arguments that support it (no more — executives stop listening after 3)</li>
+            <li>Under each argument, list the evidence and data that proves it</li>
+            <li>Check vertical logic: does each level fully explain the level above?</li>
+            <li>Check horizontal logic: are the points at each level truly parallel and MECE?</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>Slide application</h4>
+          <ul>
+            <li>Every slide title should be the "so what" — the insight, not the topic</li>
+            <li>"Revenue by region" ✗ → "Asia-Pacific is the only region growing" ✓</li>
+            <li>The body of the slide provides the evidence for that claim</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> You need to present to a CFO who has 5 minutes. Your finding: the company should exit its European market. Write the SCQA opening (4 sentences max) and list your 3 supporting arguments in pyramid structure.
+        </div>
+        <textarea class="practice-input" placeholder="S: [Context the CFO already knows]&#10;C: [What has changed that demands attention]&#10;Q: [The question this raises]&#10;A: [Your recommendation]&#10;&#10;Supported by:&#10;1. ...&#10;2. ...&#10;3. ..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'pyramid')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-pyramid">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2x2 Matrix -->
+    <div class="fw-card" onclick="toggleCard(this, 'matrix-detail')" data-name="2x2 Matrix" data-tags="prioritisation decision visual">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Prioritisation</div>
+      <div class="fw-name">The 2×2 Matrix</div>
+      <div class="fw-short">Four quadrants, two axes — the simplest tool for prioritisation and strategic communication.</div>
+      <div class="fw-tags">
+        <span class="tag">Visual</span>
+        <span class="tag">BCG</span>
+        <span class="tag">Priority</span>
+      </div>
+    </div>
+    <div class="fw-detail" id="matrix-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>What it is</h4>
+          <p>A 2×2 matrix plots items on two dimensions to create four quadrants, each suggesting a different strategic response. The BCG Growth-Share Matrix is the most famous, but the format applies across nearly every consulting question.</p>
+        </div>
+        <div class="detail-block">
+          <h4>Classic versions</h4>
+          <ul>
+            <li><strong>Impact vs Effort:</strong> Quick wins, big bets, fill-ins, thankless tasks</li>
+            <li><strong>Urgency vs Importance:</strong> Eisenhower Matrix — do, schedule, delegate, eliminate</li>
+            <li><strong>Market Share vs Growth:</strong> BCG — Stars, Cash Cows, Question Marks, Dogs</li>
+            <li><strong>Feasibility vs Desirability:</strong> Innovation portfolio prioritisation</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>How to use it well</h4>
+          <ol class="steps-list">
+            <li>Choose axes that are genuinely independent (no hidden correlation)</li>
+            <li>Define what "high" means on each axis before you plot</li>
+            <li>Name the quadrants with action language, not descriptions</li>
+            <li>Let the matrix drive the conversation, not conclude it — outliers are interesting</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>Common mistakes</h4>
+          <ul>
+            <li>Choosing axes that aren't actually independent (they correlate and everything clusters)</li>
+            <li>Using it as a decoration rather than a decision tool</li>
+            <li>Forgetting to define thresholds — where exactly is the high/low line?</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> A government department has 8 digital transformation initiatives. Resources allow them to progress only 3 this year. Choose your two axes, name all four quadrants with action language, and explain where you'd place at least 3 types of initiatives.
+        </div>
+        <textarea class="practice-input" placeholder="My axes: X = [  ] | Y = [  ]&#10;&#10;Quadrant names:&#10;Top-right (high/high): ...&#10;Top-left (low/high): ...&#10;Bottom-right (high/low): ...&#10;Bottom-left (low/low): ...&#10;&#10;Placement rationale: ..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'matrix')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-matrix">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stakeholder Mapping -->
+    <div class="fw-card" onclick="toggleCard(this, 'stakeholder-detail')" data-name="Stakeholder Mapping" data-tags="stakeholders influence power engagement">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Stakeholder Analysis</div>
+      <div class="fw-name">Stakeholder Mapping</div>
+      <div class="fw-short">Who matters, how much, and what they want. The political map every consultant needs.</div>
+      <div class="fw-tags">
+        <span class="tag">Power</span>
+        <span class="tag">Influence</span>
+        <span class="tag">Change</span>
+      </div>
+    </div>
+    <div class="fw-detail" id="stakeholder-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>What it is</h4>
+          <p>Stakeholder mapping identifies who has a stake in the project, their level of power and interest, and their current disposition. It determines how much engagement each stakeholder needs and what form that engagement should take.</p>
+        </div>
+        <div class="detail-block">
+          <h4>The power-interest grid</h4>
+          <ul>
+            <li><strong>High power, high interest:</strong> Manage closely — these are your key players</li>
+            <li><strong>High power, low interest:</strong> Keep satisfied — they can block but won't engage</li>
+            <li><strong>Low power, high interest:</strong> Keep informed — advocates in waiting</li>
+            <li><strong>Low power, low interest:</strong> Monitor — minimal effort needed</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Beyond the grid: Disposition</h4>
+          <ol class="steps-list">
+            <li>Plot each stakeholder by power and interest</li>
+            <li>Mark their current disposition: Champion / Neutral / Resistant</li>
+            <li>For each resistant high-power stakeholder, develop a specific engagement plan</li>
+            <li>Identify your coalition of champions and activate them early</li>
+            <li>Revisit the map at each project milestone — positions shift</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>In public sector / social impact consulting</h4>
+          <ul>
+            <li>Add a third dimension: legitimacy (who has the moral authority to speak on this?)</li>
+            <li>Community voices often have low formal power but high legitimacy — treat them accordingly</li>
+            <li>Document who is absent from the room and why</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> You're advising a city council on closing three underperforming community health centres and consolidating into one modern hub. Identify 5 stakeholders, plot them on the power-interest grid, note their disposition, and describe your engagement approach for the most critical one.
+        </div>
+        <textarea class="practice-input" placeholder="Stakeholder 1: [Name/group] | Power: H/L | Interest: H/L | Disposition: Champion/Neutral/Resistant&#10;...&#10;&#10;For [most critical stakeholder], my engagement approach would be: ..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'stakeholder')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-stakeholder">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /fw-detail stakeholder -->
+
+    <!-- Porter's Five Forces -->
+    <div class="fw-card" onclick="toggleCard(this, 'porter-detail')" data-name="Porter's Five Forces" data-tags="industry analysis competition strategy market">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Industry Analysis</div>
+      <div class="fw-name">Porter's Five Forces</div>
+      <div class="fw-short">Is this industry structurally attractive? The framework that reveals where power actually lives in any market.</div>
+      <div class="fw-tags"><span class="tag">Competition</span><span class="tag">Markets</span><span class="tag">Harvard</span></div>
+    </div>
+    <div class="fw-detail" id="porter-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>The five forces</h4>
+          <ul>
+            <li><strong>Threat of new entrants:</strong> How easy is it for competitors to enter? (barriers: capital, regulation, brand, IP)</li>
+            <li><strong>Bargaining power of suppliers:</strong> Can suppliers squeeze margins? (concentration, switching costs, substitutes)</li>
+            <li><strong>Bargaining power of buyers:</strong> Can customers push prices down? (volume, alternatives, switching ease)</li>
+            <li><strong>Threat of substitutes:</strong> Could a different solution make this industry irrelevant?</li>
+            <li><strong>Competitive rivalry:</strong> How intense is competition among existing players?</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>The output: structural attractiveness</h4>
+          <p>After assessing all five forces, rate each High/Medium/Low. Industries where most forces are weak (low threat) are structurally attractive — incumbents can sustain profitability. Industries where forces are strong are structurally brutal (airlines, airlines, airlines).</p>
+        </div>
+        <div class="detail-block">
+          <h4>How to use it in consulting</h4>
+          <ol class="steps-list">
+            <li>Run it at the industry level first — not the company level</li>
+            <li>For each force, identify the 2–3 specific factors that drive it high or low</li>
+            <li>Identify which force is most critical to the client's problem</li>
+            <li>Use to frame the "why now" of a market entry, exit, or strategy pivot</li>
+            <li>Pair with SWOT: Five Forces is external, SWOT adds internal perspective</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>Common misuses</h4>
+          <ul>
+            <li>Applying it to a company rather than an industry</li>
+            <li>Treating all five forces as equally important — they rarely are</li>
+            <li>Forgetting the sixth force often added: <strong>Complementors</strong> (players who increase the value of your product)</li>
+            <li>Using it as a static snapshot — forces shift over time</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> A private equity firm is evaluating entry into the Australian residential aged care sector. Run a Five Forces analysis — rate each force (High/Medium/Low), explain the 2–3 key drivers, and give a one-sentence conclusion on structural attractiveness.
+        </div>
+        <textarea class="practice-input" placeholder="1. Threat of new entrants: [H/M/L] — Key drivers: ...&#10;2. Supplier power: [H/M/L] — Key drivers: ...&#10;3. Buyer power: [H/M/L] — Key drivers: ...&#10;4. Threat of substitutes: [H/M/L] — Key drivers: ...&#10;5. Competitive rivalry: [H/M/L] — Key drivers: ...&#10;&#10;Structural attractiveness conclusion: ..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'porter')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-porter">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- McKinsey 7S -->
+    <div class="fw-card" onclick="toggleCard(this, 'sevens-detail')" data-name="McKinsey 7S Framework" data-tags="organisation alignment strategy structure systems culture">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Organisational Design</div>
+      <div class="fw-name">McKinsey 7S Framework</div>
+      <div class="fw-short">Seven interdependent elements that must align for strategy to execute. The diagnostic for when change keeps failing.</div>
+      <div class="fw-tags"><span class="tag">Alignment</span><span class="tag">Organisation</span><span class="tag">McKinsey</span></div>
+    </div>
+    <div class="fw-detail" id="sevens-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>The seven elements</h4>
+          <ul>
+            <li><strong>Strategy:</strong> The plan for competitive advantage</li>
+            <li><strong>Structure:</strong> How the organisation is divided and coordinated</li>
+            <li><strong>Systems:</strong> Processes, workflows, and IT that run daily operations</li>
+            <li><strong>Shared Values:</strong> The core beliefs and culture (the central element — everything connects to this)</li>
+            <li><strong>Style:</strong> Leadership and management approach</li>
+            <li><strong>Staff:</strong> People capabilities and talent pipeline</li>
+            <li><strong>Skills:</strong> Competencies the organisation actually has vs needs</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Hard vs Soft S's</h4>
+          <ul>
+            <li><strong>Hard (easier to change):</strong> Strategy, Structure, Systems</li>
+            <li><strong>Soft (harder to change):</strong> Shared Values, Style, Staff, Skills</li>
+            <li>Most implementations fail because they change the Hard S's and ignore the Soft S's</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Using it in consulting</h4>
+          <ol class="steps-list">
+            <li>Map the current state of all 7 elements</li>
+            <li>Map the future state required by the strategy</li>
+            <li>Identify the gaps — where is the misalignment?</li>
+            <li>Sequence interventions: Hard S's first, but budget for Soft S's</li>
+            <li>Check: if you change element X, which others are affected?</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>When to reach for it</h4>
+          <ul>
+            <li>Post-merger integration — two organisations with different Shared Values will clash</li>
+            <li>Strategy execution failures — "we have the strategy, why isn't it working?"</li>
+            <li>Organisational redesign — check that new structure aligns with strategy</li>
+            <li>Culture change programs — it exposes what actually needs to shift</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> A regional hospital network has a strategy to become a digital-first health system within 3 years. They've invested in new EHR technology (Systems) and restructured into integrated care teams (Structure). But 18 months in, adoption is low and staff are resistant. Use 7S to diagnose the misalignment — identify which elements are out of sync with the strategy.
+        </div>
+        <textarea class="practice-input" placeholder="Strategy: Digital-first health system [DEFINED]&#10;Structure: Integrated care teams [CHANGED]&#10;Systems: New EHR [CHANGED]&#10;Shared Values: [What might be misaligned here?]&#10;Style: [What leadership gap might exist?]&#10;Staff: [What capability gap?]&#10;Skills: [What training gap?]&#10;&#10;Primary misalignment diagnosis: The core problem is..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'sevens')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-sevens">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Business Model Canvas -->
+    <div class="fw-card" onclick="toggleCard(this, 'bmc-detail')" data-name="Business Model Canvas" data-tags="business model strategy value proposition customers revenue">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Business Model Design</div>
+      <div class="fw-name">Business Model Canvas</div>
+      <div class="fw-short">Nine building blocks, one page. The universal language for describing how any organisation creates and captures value.</div>
+      <div class="fw-tags"><span class="tag">Osterwalder</span><span class="tag">Startups</span><span class="tag">Strategy</span></div>
+    </div>
+    <div class="fw-detail" id="bmc-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>The nine blocks</h4>
+          <ul>
+            <li><strong>Customer Segments:</strong> Who are we creating value for?</li>
+            <li><strong>Value Propositions:</strong> What problem do we solve? What need do we satisfy?</li>
+            <li><strong>Channels:</strong> How do we reach and deliver to customers?</li>
+            <li><strong>Customer Relationships:</strong> What relationship does each segment expect?</li>
+            <li><strong>Revenue Streams:</strong> What are customers paying for, and how?</li>
+            <li><strong>Key Resources:</strong> What assets does the model require?</li>
+            <li><strong>Key Activities:</strong> What must we do well to deliver the value proposition?</li>
+            <li><strong>Key Partnerships:</strong> What can't we do ourselves — and who can?</li>
+            <li><strong>Cost Structure:</strong> What are the most important costs?</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Left brain vs right brain</h4>
+          <ul>
+            <li><strong>Right side (value):</strong> Customer Segments, Value Props, Channels, Relationships, Revenue — who we serve and how</li>
+            <li><strong>Left side (efficiency):</strong> Key Resources, Activities, Partners, Costs — how we operate</li>
+            <li>Business model innovation often means changing the left side to serve the right side differently</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>In consulting practice</h4>
+          <ol class="steps-list">
+            <li>Always start with Customer Segments — everything else follows from who you serve</li>
+            <li>The Value Proposition is the pivot: does it match what the segment actually needs?</li>
+            <li>Check fit between Revenue Streams and Cost Structure — is the model viable?</li>
+            <li>Map current state, then future state — the gap is your consulting work</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>For health and social impact</h4>
+          <ul>
+            <li>Often the "customer" (funder/government) differs from the "beneficiary" (patient/community) — map both</li>
+            <li>Add a "Social Value Proposition" block to capture mission alongside commercial value</li>
+            <li>Revenue Streams in this context often include grants, SHS contracts, fee-for-service, philanthropy</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> A GP clinic wants to pivot from episodic fee-for-service consultations to a subscription-based chronic disease management model. Complete a Business Model Canvas for the new model — focus especially on how the Value Proposition, Revenue Streams, and Key Activities change from the current model.
+        </div>
+        <textarea class="practice-input" placeholder="Customer Segments: [Who specifically — not just 'patients']&#10;Value Proposition: [What changes vs current model?]&#10;Channels: ...&#10;Customer Relationships: [Subscription implies what kind of relationship?]&#10;Revenue Streams: [How does payment model change?]&#10;Key Resources: ...&#10;Key Activities: [What new activities does this require?]&#10;Key Partnerships: ...&#10;Cost Structure: [What new costs does subscription create?]&#10;&#10;Biggest model risk: ..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'bmc')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-bmc">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Three Horizons -->
+    <div class="fw-card" onclick="toggleCard(this, 'horizons-detail')" data-name="Three Horizons of Growth" data-tags="innovation strategy growth portfolio future planning">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Growth Strategy</div>
+      <div class="fw-name">Three Horizons of Growth</div>
+      <div class="fw-short">Manage today, build tomorrow, create the future — simultaneously. McKinsey's framework for balancing exploitation and exploration.</div>
+      <div class="fw-tags"><span class="tag">McKinsey</span><span class="tag">Innovation</span><span class="tag">Portfolio</span></div>
+    </div>
+    <div class="fw-detail" id="horizons-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>The three horizons</h4>
+          <ul>
+            <li><strong>Horizon 1 — Defend & Extend:</strong> Current core business. Optimise, defend market share, improve margins. Payoff: now. (60–70% of resources)</li>
+            <li><strong>Horizon 2 — Build & Grow:</strong> Emerging opportunities that extend the core. Scaling proven bets. Payoff: 2–5 years. (20–30% of resources)</li>
+            <li><strong>Horizon 3 — Create & Imagine:</strong> Exploratory options and disruptions. High risk, high potential. Payoff: 5–10 years. (10% of resources)</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>The key insight</h4>
+          <p>All three horizons must be managed simultaneously — not sequentially. Organisations that only manage H1 become obsolete. Organisations that only pursue H3 run out of money. The portfolio balance is the discipline.</p>
+        </div>
+        <div class="detail-block">
+          <h4>Common failure modes</h4>
+          <ol class="steps-list">
+            <li><strong>H1 gravity:</strong> Every resource request gets pulled back to the core — H2 and H3 starve</li>
+            <li><strong>H3 theatre:</strong> H3 activities exist as innovation washing but receive no real resources</li>
+            <li><strong>Wrong metrics:</strong> Measuring H2/H3 on H1 profitability criteria kills exploration too early</li>
+            <li><strong>Culture clash:</strong> H1 and H3 need different cultures — separating them is often necessary</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>Application</h4>
+          <ul>
+            <li>Map the client's current portfolio across all three horizons</li>
+            <li>Ask: are H2 and H3 underfunded relative to stated strategy?</li>
+            <li>Design different KPIs and governance for each horizon</li>
+            <li>Use to structure innovation investment conversations with boards</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> A pathology company generates 85% of revenue from routine blood tests (fast commoditising under automation). They're considering: (A) Improving turnaround time on existing tests, (B) Building a genomic screening service for oncologists, (C) Researching AI-powered diagnostics for rare diseases. Map each to a horizon, recommend a resource allocation split, and identify their biggest Horizon 1 risk.
+        </div>
+        <textarea class="practice-input" placeholder="A (turnaround improvement): Horizon [?] because...&#10;B (genomic screening): Horizon [?] because...&#10;C (AI rare disease): Horizon [?] because...&#10;&#10;Recommended resource split: H1: [%] / H2: [%] / H3: [%]&#10;Rationale: ...&#10;&#10;Biggest H1 risk: ..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'horizons')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-horizons">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PESTLE -->
+    <div class="fw-card" onclick="toggleCard(this, 'pestle-detail')" data-name="PESTLE Analysis" data-tags="environmental scanning context macro factors external">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Environmental Scanning</div>
+      <div class="fw-name">PESTLE Analysis</div>
+      <div class="fw-short">Political, Economic, Social, Technological, Legal, Environmental — a checklist to make sure you've diagnosed the whole context, not just the obvious slice.</div>
+      <div class="fw-tags"><span class="tag">Context</span><span class="tag">Macro</span><span class="tag">Checklist</span></div>
+    </div>
+    <div class="fw-detail" id="pestle-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>The six lenses</h4>
+          <ul>
+            <li><strong>Political:</strong> Government stability, regulation, trade policy, election cycles</li>
+            <li><strong>Economic:</strong> Growth, interest rates, inflation, exchange rates, labour market</li>
+            <li><strong>Social:</strong> Demographics, cultural trends, consumer attitudes, workforce values</li>
+            <li><strong>Technological:</strong> Innovation rate, automation, digital disruption, R&D activity</li>
+            <li><strong>Legal:</strong> Employment law, health and safety, industry-specific regulation, IP law</li>
+            <li><strong>Environmental:</strong> Climate policy, sustainability expectations, resource scarcity</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>What it's actually for</h4>
+          <p>PESTLE is MECE applied to context rather than to a single problem. It exists to stop you diagnosing a client's situation too narrowly — most people naturally default to thinking about competitors and customers (which Porter's Five Forces covers) and forget the macro forces sitting above the industry entirely.</p>
+        </div>
+        <div class="detail-block">
+          <h4>How to use it well</h4>
+          <ol class="steps-list">
+            <li>Run through all six lenses even if some feel irrelevant — the discipline is in checking, not just listing what's obvious</li>
+            <li>For each factor identified, ask: is this a current reality or an emerging trend? Time horizon matters</li>
+            <li>Rate each factor's likely impact and likelihood — don't treat all six as equally weighted</li>
+            <li>Carry the 2–3 most material factors forward into your actual structuring work (Issue Tree, SWOT, etc.) — PESTLE is an input, not an endpoint</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>Common pitfalls</h4>
+          <ul>
+            <li>Treating it as a box-ticking exercise that produces a long list nobody uses afterward</li>
+            <li>Confusing PESTLE (macro/external context) with SWOT (which mixes internal and external) — they answer different questions</li>
+            <li>Listing factors without assessing materiality — not every PESTLE factor matters for every client problem</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> A private aged care provider is deciding whether to expand into the WA regional market over the next 3 years. Run a PESTLE scan — identify at least one specific factor per lens, and flag the two factors you judge most material to this specific decision.
+        </div>
+        <textarea class="practice-input" placeholder="Political: ...&#10;Economic: ...&#10;Social: ...&#10;Technological: ...&#10;Legal: ...&#10;Environmental: ...&#10;&#10;Two most material factors for this decision: ... because..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'pestle')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-pestle">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Root Cause Analysis -->
+    <div class="fw-card" onclick="toggleCard(this, 'rootcause-detail')" data-name="Root Cause Analysis" data-tags="5 whys fishbone ishikawa causal diagnosis">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Problem Structuring</div>
+      <div class="fw-name">Root Cause Analysis (5 Whys & Fishbone)</div>
+      <div class="fw-short">The symptom is rarely the problem. Two simple techniques for pushing past it to what's actually driving the issue.</div>
+      <div class="fw-tags"><span class="tag">5 Whys</span><span class="tag">Ishikawa</span><span class="tag">Causation</span></div>
+    </div>
+    <div class="fw-detail" id="rootcause-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>The 5 Whys technique</h4>
+          <p>Start with the presenting problem and ask "why?" repeatedly — typically five times — with each answer becoming the input to the next question. The discipline is resisting the urge to stop at the first plausible-sounding answer, which is usually still a symptom, not a root cause.</p>
+        </div>
+        <div class="detail-block">
+          <h4>The Fishbone (Ishikawa) diagram</h4>
+          <p>A visual structure that branches the problem into standard cause categories — commonly People, Process, Equipment, Materials, Environment, Management — then asks "why" within each branch. Useful when a problem likely has multiple contributing causes rather than one linear chain.</p>
+        </div>
+        <div class="detail-block">
+          <h4>How this relates to Issue Tree</h4>
+          <ol class="steps-list">
+            <li>Issue Tree decomposes a problem into MECE categories of possible explanation, broad to narrow</li>
+            <li>Root Cause Analysis goes deep on one branch, asking "why" repeatedly until you hit something actionable</li>
+            <li>In practice: use Issue Tree to identify which branch is most likely the answer, then 5 Whys or Fishbone to drill into that specific branch</li>
+            <li>Stop when the answer becomes something you can actually act on — "the team lacks training" is actionable; "humans make mistakes" is not</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>Common pitfalls</h4>
+          <ul>
+            <li>Stopping too early at a comfortable, blame-free answer rather than the uncomfortable structural one</li>
+            <li>Following a single causal chain when the problem actually has multiple parallel causes (this is when Fishbone beats 5 Whys)</li>
+            <li>Treating the "5" in 5 Whys literally — sometimes it's 3, sometimes it's 7. Stop when you reach root cause, not at a fixed count</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> A community pharmacy chain has seen a sharp rise in prescription dispensing errors over the past 6 months. Run a 5 Whys analysis starting from the presenting problem, and note where you'd want to verify your assumption with real data rather than guessing at the next "why."
+        </div>
+        <textarea class="practice-input" placeholder="Problem: Prescription dispensing errors have risen sharply&#10;&#10;Why 1: ...&#10;Why 2: ...&#10;Why 3: ...&#10;Why 4: ...&#10;Why 5 (root cause): ...&#10;&#10;Where I'd want to verify with real data rather than assume: ..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'rootcause')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-rootcause">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gap Analysis -->
+    <div class="fw-card" onclick="toggleCard(this, 'gapanalysis-detail')" data-name="Gap Analysis" data-tags="current state future state delta capability">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Situation Analysis</div>
+      <div class="fw-name">Gap Analysis</div>
+      <div class="fw-short">Where you are, where you need to be, and the precise delta in between — the simplest possible diagnostic frame.</div>
+      <div class="fw-tags"><span class="tag">Current State</span><span class="tag">Future State</span><span class="tag">Delta</span></div>
+    </div>
+    <div class="fw-detail" id="gapanalysis-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>The structure</h4>
+          <ul>
+            <li><strong>Current state:</strong> Where the organisation/process/capability actually is today, evidenced, not assumed</li>
+            <li><strong>Future state:</strong> Where it needs to be — tied to a specific goal, strategy, or target</li>
+            <li><strong>The gap:</strong> The precise, named difference between the two — this is the actual work to be done</li>
+            <li><strong>Bridging actions:</strong> What closes the gap, who owns it, and by when</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Why it's distinct from other diagnostic tools</h4>
+          <p>Gap Analysis is the closest consulting comes to science's "knowledge gap" framing — except the gap is usually capability, resource, or outcome, not knowledge. It's less about explaining <em>why</em> a problem exists (that's Root Cause Analysis) and more about precisely defining <em>what</em> needs to change and by how much.</p>
+        </div>
+        <div class="detail-block">
+          <h4>How to run it well</h4>
+          <ol class="steps-list">
+            <li>Define future state first and concretely — vague targets produce vague gaps</li>
+            <li>Assess current state with real evidence (data, audits, interviews) rather than internal assumptions about performance</li>
+            <li>Name the gap in the same units as the target — if the goal is a number, the gap should be a number too</li>
+            <li>Resist closing straight to solutions before the gap itself is precisely defined and agreed</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>Where it shows up across this notebook</h4>
+          <ul>
+            <li>Scaling Readiness Assessment is a Gap Analysis applied specifically to operational capability</li>
+            <li>OKRs implicitly run a Gap Analysis every cycle — Key Results are the measured gap between current and target state</li>
+            <li>Logic Model and Theory of Change both assume a gap analysis has already identified the outcome worth pursuing</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> A regional hospital wants to reduce average emergency department wait times from the current 4.2 hours to a target of 2.5 hours within 18 months. Run a Gap Analysis — define current state, future state, name the precise gap, and propose two bridging actions with owners.
+        </div>
+        <textarea class="practice-input" placeholder="Current state: [evidenced, specific]&#10;Future state: [specific, time-bound target]&#10;The gap: [precise, in the same units as the target]&#10;&#10;Bridging action 1: ... — Owner: ...&#10;Bridging action 2: ... — Owner: ..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'gapanalysis')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-gapanalysis">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /fw-grid cat-entry -->
+
+
+
+  <!-- ═══════════════════════════════════
+       SECTION 2: IMPLEMENTATION
+  ══════════════════════════════════════ -->
+  <div class="section-header cat-implementation" data-cat="implementation">
+    <span class="section-label">Implementation</span>
+    <span class="section-title">Implementation Frameworks</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="fw-grid cat-implementation" data-cat="implementation">
+
+    <!-- RACI -->
+    <div class="fw-card" onclick="toggleCard(this, 'raci-detail')" data-name="RACI Matrix" data-tags="roles accountability responsibility governance">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Governance</div>
+      <div class="fw-name">RACI Matrix</div>
+      <div class="fw-short">Who is Responsible, Accountable, Consulted, Informed. The antidote to implementation ambiguity.</div>
+      <div class="fw-tags"><span class="tag">Governance</span><span class="tag">Roles</span><span class="tag">Team</span></div>
+    </div>
+    <div class="fw-detail" id="raci-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>The four roles</h4>
+          <ul>
+            <li><strong>Responsible:</strong> Does the work. Can be multiple people.</li>
+            <li><strong>Accountable:</strong> Owns the outcome. Must be exactly ONE person.</li>
+            <li><strong>Consulted:</strong> Provides input. Two-way communication. Consulted before decisions.</li>
+            <li><strong>Informed:</strong> Notified after decisions. One-way communication.</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Why it matters</h4>
+          <p>Most implementation failures trace to unclear accountability. RACI forces the conversation about who owns what — before the work begins, not after the deadline is missed.</p>
+        </div>
+        <div class="detail-block">
+          <h4>Building one</h4>
+          <ol class="steps-list">
+            <li>List all tasks/deliverables down the left column</li>
+            <li>List all roles/people across the top row</li>
+            <li>For each task, assign R/A/C/I — ensure exactly one A per row</li>
+            <li>Review with the team: challenge any row with no A or multiple As</li>
+            <li>Socialise and lock it before workstreams begin</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>Red flags to watch for</h4>
+          <ul>
+            <li>One person is A for everything — overloaded or unclear structure</li>
+            <li>Lots of C and I, few R — decision bottlenecks ahead</li>
+            <li>A role is Consulted for every decision — may actually be a blocker</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> You're implementing a new patient data system across 6 hospitals. Roles involved: Project Lead, IT Director, Chief Medical Officer, Frontline Nurses, External Vendor, Hospital Board. Create a partial RACI for these three tasks: (1) System configuration, (2) Staff training design, (3) Go-live decision.
+        </div>
+        <textarea class="practice-input" placeholder="Task | Project Lead | IT Director | CMO | Nurses | Vendor | Board&#10;System config | R | A | C | I | R | I&#10;Training design | ...&#10;Go-live decision | ...&#10;&#10;Rationale: ..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'raci')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-raci">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Change Curve -->
+    <div class="fw-card" onclick="toggleCard(this, 'changecurve-detail')" data-name="Kübler-Ross Change Curve" data-tags="change management people adoption">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Change Management</div>
+      <div class="fw-name">Kübler-Ross Change Curve</div>
+      <div class="fw-short">People don't resist change — they resist loss. Map the emotional journey to plan your interventions.</div>
+      <div class="fw-tags"><span class="tag">People</span><span class="tag">Adoption</span><span class="tag">Culture</span></div>
+    </div>
+    <div class="fw-detail" id="changecurve-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>The curve stages</h4>
+          <ul>
+            <li><strong>Shock/Denial:</strong> "This won't happen" or "This doesn't affect me"</li>
+            <li><strong>Anger/Fear:</strong> "Why is this happening?" or "I'll lose my job"</li>
+            <li><strong>Bargaining:</strong> "What if we just did X instead?"</li>
+            <li><strong>Depression:</strong> Low energy, disengagement, quiet quitting the change</li>
+            <li><strong>Acceptance:</strong> "Okay, let's make this work"</li>
+            <li><strong>Integration:</strong> The new becomes the norm</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Consulting application</h4>
+          <p>Different stakeholder groups will be at different stages simultaneously. Your change management plan should map interventions to stages — not one-size-fits-all communication.</p>
+        </div>
+        <div class="detail-block">
+          <h4>Interventions by stage</h4>
+          <ol class="steps-list">
+            <li><strong>Denial:</strong> Provide clear information, share the business case honestly</li>
+            <li><strong>Anger:</strong> Active listening, acknowledge emotions, don't argue</li>
+            <li><strong>Bargaining:</strong> Channel energy into co-design — give people a role</li>
+            <li><strong>Depression:</strong> Quick wins, peer stories, visible progress</li>
+            <li><strong>Acceptance:</strong> Reinforce with training, tools, and early successes</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>Key insight</h4>
+          <ul>
+            <li>Leaders typically experience the curve months before their teams — don't assume alignment</li>
+            <li>Unaddressed depression is where implementations die silently</li>
+            <li>Speed through the curve ≠ success — people need time, but they need support, not silence</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> A government agency is merging two departments. The announcement was made 6 weeks ago. Frontline workers are disengaged and passive in all-hands meetings. Senior leaders are frustrated with the "lack of buy-in." Diagnose where the workforce likely sits on the curve and recommend three specific interventions.
+        </div>
+        <textarea class="practice-input" placeholder="My diagnosis: The workforce appears to be in the [stage] phase because...&#10;&#10;Three interventions:&#10;1. ...&#10;2. ...&#10;3. ..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'changecurve')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-changecurve">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gantt / Work Planning -->
+    <div class="fw-card" onclick="toggleCard(this, 'workplan-detail')" data-name="Consulting Work Plan" data-tags="planning timelines milestones project management">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Project Management</div>
+      <div class="fw-name">The Consulting Work Plan</div>
+      <div class="fw-short">Not just a Gantt chart — a living document that connects deliverables, analyses, and owner accountability.</div>
+      <div class="fw-tags"><span class="tag">Planning</span><span class="tag">Milestones</span><span class="tag">Team</span></div>
+    </div>
+    <div class="fw-detail" id="workplan-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>What makes a consulting work plan different</h4>
+          <p>A consulting work plan ties milestones directly to hypotheses and analyses. Each task should answer: what question does this answer? What deliverable does it feed? Who owns it?</p>
+        </div>
+        <div class="detail-block">
+          <h4>Structure</h4>
+          <ul>
+            <li><strong>Phase:</strong> Discovery / Analysis / Recommendation / Implementation</li>
+            <li><strong>Milestone:</strong> The output (e.g. "Client diagnostic complete")</li>
+            <li><strong>Key analyses:</strong> The work required to hit that milestone</li>
+            <li><strong>Owner:</strong> The single accountable person</li>
+            <li><strong>Due date:</strong> Firm, not aspirational</li>
+            <li><strong>Status:</strong> On track / At risk / Blocked</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>How to run it well</h4>
+          <ol class="steps-list">
+            <li>Build the work plan with the team, not for the team</li>
+            <li>Review it at every team meeting — it's a living document</li>
+            <li>When scope changes, update the work plan explicitly</li>
+            <li>Flag "at risk" milestones early — surprises destroy trust</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>The Monday-Friday rhythm</h4>
+          <ul>
+            <li><strong>Monday:</strong> Team sync — what are we proving this week?</li>
+            <li><strong>Wednesday:</strong> Mid-week check — any blockers?</li>
+            <li><strong>Friday:</strong> Team update — what did we learn, what changes?</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> You have 8 weeks to deliver a market entry strategy for a healthcare startup entering Southeast Asia. Build the first 2 phases of your work plan: list at least 2 milestones per phase, the 2 key analyses required for each milestone, and the owner role.
+        </div>
+        <textarea class="practice-input" placeholder="Phase 1: Discovery (Weeks 1-3)&#10;Milestone 1.1: [e.g. Market landscape mapped]&#10;  - Analysis: ...&#10;  - Owner: ...&#10;&#10;Milestone 1.2: ...&#10;&#10;Phase 2: ..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'workplan')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-workplan">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Value Chain Analysis -->
+    <div class="fw-card" onclick="toggleCard(this, 'valuechain-detail')" data-name="Value Chain Analysis" data-tags="operations value competitive advantage activities margin">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Operations Strategy</div>
+      <div class="fw-name">Value Chain Analysis</div>
+      <div class="fw-short">Where does your client actually create value — and where do they destroy it? Porter's tool for operational strategy.</div>
+      <div class="fw-tags"><span class="tag">Porter</span><span class="tag">Operations</span><span class="tag">Margin</span></div>
+    </div>
+    <div class="fw-detail" id="valuechain-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>The two activity types</h4>
+          <ul>
+            <li><strong>Primary activities</strong> (directly create value):
+              <br>— Inbound logistics, Operations, Outbound logistics, Marketing & Sales, Service</li>
+            <li><strong>Support activities</strong> (enable primary activities):
+              <br>— Procurement, Technology development, HR management, Firm infrastructure</li>
+          </ul>
+          <p style="margin-top:0.5rem">Margin = total value created minus total costs of activities. Each activity either adds to margin or erodes it.</p>
+        </div>
+        <div class="detail-block">
+          <h4>The strategic questions</h4>
+          <ul>
+            <li>Which activities create the most value for the customer?</li>
+            <li>Which activities cost the most relative to value created?</li>
+            <li>Which activities are truly differentiated from competitors?</li>
+            <li>Which activities could be outsourced without losing competitive advantage?</li>
+            <li>Where in the chain can technology create the most leverage?</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>In consulting practice</h4>
+          <ol class="steps-list">
+            <li>Map the client's full value chain — don't assume you know it</li>
+            <li>For each activity, estimate its cost and the value it adds to the customer</li>
+            <li>Benchmark against competitors: where are they winning?</li>
+            <li>Identify linkages — how does one activity affect another?</li>
+            <li>Focus recommendations on high-cost or high-value activities first</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>Health sector application</h4>
+          <ul>
+            <li>In healthcare, primary activities map to: patient intake → diagnosis → treatment → follow-up → discharge</li>
+            <li>Support activities: clinical systems, workforce, procurement, administration</li>
+            <li>The biggest waste is usually in linkages — handoffs between activities where value is lost</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> A private hospital group has declining margins despite growing patient volumes. Map their value chain — list at least 3 primary and 2 support activities, identify which activity you'd investigate first as the likely margin problem, and explain which linkage between activities might be the hidden cost driver.
+        </div>
+        <textarea class="practice-input" placeholder="Primary activities:&#10;1. [e.g. Patient intake & triage]&#10;2. ...&#10;3. ...&#10;&#10;Support activities:&#10;1. ...&#10;2. ...&#10;&#10;Activity I'd investigate first: [X] because...&#10;&#10;Key linkage to examine: The handoff between [A] and [B] because..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'valuechain')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-valuechain">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /fw-grid cat-implementation -->
+
+  <!-- ═══════════════════════════════════
+       SECTION 3: EVALUATION
+  ══════════════════════════════════════ -->
+  <div class="section-header cat-evaluation" data-cat="evaluation">
+    <span class="section-label">Evaluation</span>
+    <span class="section-title">Evaluation Frameworks</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="fw-grid cat-evaluation" data-cat="evaluation">
+
+    <!-- Logic Model -->
+    <div class="fw-card" onclick="toggleCard(this, 'logicmodel-detail')" data-name="Logic Model" data-tags="evaluation planning program theory of change">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Program Design</div>
+      <div class="fw-name">Logic Model</div>
+      <div class="fw-short">Inputs → Activities → Outputs → Outcomes → Impact. The standard architecture for program evaluation.</div>
+      <div class="fw-tags"><span class="tag">Theory of Change</span><span class="tag">Government</span><span class="tag">Social Impact</span></div>
+    </div>
+    <div class="fw-detail" id="logicmodel-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>The chain</h4>
+          <ul>
+            <li><strong>Inputs:</strong> Resources invested (money, staff, time, equipment)</li>
+            <li><strong>Activities:</strong> What the program does (workshops, services, advocacy)</li>
+            <li><strong>Outputs:</strong> Immediate, countable products of activities (# participants, # sessions)</li>
+            <li><strong>Outcomes:</strong> Changes in behaviour, knowledge, or conditions</li>
+            <li><strong>Impact:</strong> Long-term change in the world attributable to the program</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Outputs vs Outcomes: the critical distinction</h4>
+          <ul>
+            <li><strong>Output:</strong> "200 people attended the health literacy workshop" (you control this)</li>
+            <li><strong>Outcome:</strong> "Participants increased preventive care visits by 30%" (people changed)</li>
+            <li><strong>Impact:</strong> "Reduced emergency admissions across the region" (system changed)</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Building one</h4>
+          <ol class="steps-list">
+            <li>Start from the right: what impact do you want to achieve?</li>
+            <li>Work backwards: what outcomes would indicate progress toward that impact?</li>
+            <li>What activities would drive those outcomes?</li>
+            <li>What outputs would those activities produce?</li>
+            <li>What inputs are needed to run those activities?</li>
+            <li>Validate assumptions at each arrow</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>Where logic models fail</h4>
+          <ul>
+            <li>Confusing outputs for outcomes (the most common error)</li>
+            <li>Claiming impact that takes 10 years after a 12-month program</li>
+            <li>Not stating the assumptions that link each step</li>
+            <li>Building it after the program design — should be before</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> A nonprofit runs a 6-month mentoring program for young people at risk of unemployment. Build a logic model. For each category (inputs through impact), list 2–3 elements and identify the assumption linking activities to outcomes.
+        </div>
+        <textarea class="practice-input" placeholder="Inputs: [staff, funding, venue...]&#10;Activities: [weekly 1:1 mentoring, resume workshops...]&#10;Outputs: [# mentor matches, # workshops]&#10;Outcomes: [increased confidence, improved job readiness]&#10;Impact: [reduced youth unemployment in the region]&#10;&#10;Key assumption: Activities → Outcomes assumes that..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'logicmodel')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-logicmodel">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kirkpatrick Model -->
+    <div class="fw-card" onclick="toggleCard(this, 'kirkpatrick-detail')" data-name="Kirkpatrick Model" data-tags="training evaluation learning effectiveness">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Learning Evaluation</div>
+      <div class="fw-name">Kirkpatrick Four-Level Model</div>
+      <div class="fw-short">Did people like it? Did they learn? Did they change? Did it matter? Four levels of training effectiveness.</div>
+      <div class="fw-tags"><span class="tag">Training</span><span class="tag">L&D</span><span class="tag">ROI</span></div>
+    </div>
+    <div class="fw-detail" id="kirkpatrick-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>The four levels</h4>
+          <ul>
+            <li><strong>Level 1 – Reaction:</strong> Did participants find it relevant and satisfying? (survey)</li>
+            <li><strong>Level 2 – Learning:</strong> Did knowledge, skills, or attitudes change? (pre/post test)</li>
+            <li><strong>Level 3 – Behaviour:</strong> Are they applying it on the job? (observation, 360)</li>
+            <li><strong>Level 4 – Results:</strong> Did organisational outcomes improve? (KPIs, ROI)</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>The uncomfortable truth</h4>
+          <p>Most training evaluation stops at Level 1 (the happy sheet). Levels 3 and 4 — where real value is — are rarely measured because they require baseline data, time, and a clear line of attribution.</p>
+        </div>
+        <div class="detail-block">
+          <h4>Applying it in consulting</h4>
+          <ol class="steps-list">
+            <li>Design the evaluation plan before the training, not after</li>
+            <li>Establish baselines for Level 3 and 4 metrics before delivery</li>
+            <li>Build in 90-day and 180-day follow-up checkpoints for behaviour change</li>
+            <li>Work with the client to agree which Level 4 metrics are attributable</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>For social impact consulting</h4>
+          <ul>
+            <li>Level 3 often needs qualitative data — interviews, case studies, observation</li>
+            <li>Level 4 attribution is always contested — use contribution claims, not causation</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> A client has just delivered a 2-day leadership development program to 40 managers. They want to know if it worked. Design a Kirkpatrick evaluation plan — specify one measurement method and one key question for each of the four levels.
+        </div>
+        <textarea class="practice-input" placeholder="Level 1 – Reaction&#10;Method: [e.g. post-program survey]&#10;Key question: Did participants feel the content was relevant to their role?&#10;&#10;Level 2 – Learning&#10;Method: ...&#10;&#10;Level 3 – Behaviour&#10;Method: ...&#10;&#10;Level 4 – Results&#10;Method: ..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'kirkpatrick')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-kirkpatrick">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SWOT -->
+    <div class="fw-card" onclick="toggleCard(this, 'swot-detail')" data-name="SWOT Analysis" data-tags="strategy situation analysis strengths weaknesses">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Situation Analysis</div>
+      <div class="fw-name">SWOT Analysis</div>
+      <div class="fw-short">Strengths, Weaknesses, Opportunities, Threats. Enduring because it forces both internal and external honesty.</div>
+      <div class="fw-tags"><span class="tag">Strategy</span><span class="tag">Internal</span><span class="tag">External</span></div>
+    </div>
+    <div class="fw-detail" id="swot-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>The four quadrants</h4>
+          <ul>
+            <li><strong>Strengths:</strong> Internal capabilities that give competitive advantage</li>
+            <li><strong>Weaknesses:</strong> Internal limitations that put you at a disadvantage</li>
+            <li><strong>Opportunities:</strong> External factors you can exploit</li>
+            <li><strong>Threats:</strong> External factors that could damage performance</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Moving from SWOT to strategy</h4>
+          <ul>
+            <li><strong>S + O:</strong> Use strengths to capture opportunities (aggressive growth)</li>
+            <li><strong>W + O:</strong> Address weaknesses to access opportunities (investment)</li>
+            <li><strong>S + T:</strong> Use strengths to mitigate threats (defensive)</li>
+            <li><strong>W + T:</strong> Minimise weaknesses, avoid threats (risk reduction)</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Common SWOT failure modes</h4>
+          <ol class="steps-list">
+            <li>It becomes a feel-good exercise — be ruthlessly honest about weaknesses</li>
+            <li>It ends at the four boxes — always draw out the strategic implications</li>
+            <li>Internal and external get confused — strengths are internal, opportunities are external</li>
+            <li>It's done without data — back each point with evidence</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>Consulting upgrade: TOWS Matrix</h4>
+          <p>After completing the SWOT, build a TOWS Matrix — explicitly cross-matching each S/W/O/T combination to generate strategic options. This turns description into action.</p>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> A mid-sized Australian aged care provider is considering expanding into home-care services. Complete a SWOT (3 points per quadrant) and then use the S+O and W+T combinations to generate one strategic recommendation each.
+        </div>
+        <textarea class="practice-input" placeholder="Strengths: 1. ... 2. ... 3. ...&#10;Weaknesses: 1. ... 2. ... 3. ...&#10;Opportunities: 1. ... 2. ... 3. ...&#10;Threats: 1. ... 2. ... 3. ...&#10;&#10;S+O Strategy: [use strength X to capture opportunity Y]&#10;W+T Strategy: ..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'swot')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-swot">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Balanced Scorecard -->
+    <div class="fw-card" onclick="toggleCard(this, 'bsc-detail')" data-name="Balanced Scorecard" data-tags="strategy execution performance measurement four perspectives">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Strategy Execution</div>
+      <div class="fw-name">Balanced Scorecard</div>
+      <div class="fw-short">Four perspectives, one strategy. Kaplan & Norton's system for translating vision into measurable action.</div>
+      <div class="fw-tags"><span class="tag">Kaplan Norton</span><span class="tag">Strategy Map</span><span class="tag">KPIs</span></div>
+    </div>
+    <div class="fw-detail" id="bsc-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>The four perspectives</h4>
+          <ul>
+            <li><strong>Financial:</strong> How do we look to shareholders/funders? (revenue, cost, profit, ROI)</li>
+            <li><strong>Customer:</strong> How do customers see us? (satisfaction, retention, market share, NPS)</li>
+            <li><strong>Internal Processes:</strong> What must we excel at? (efficiency, quality, cycle time, innovation rate)</li>
+            <li><strong>Learning & Growth:</strong> Can we continue to improve? (staff capability, culture, technology, knowledge)</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>The causal logic</h4>
+          <p>The BSC is not just four lists of KPIs — it's a causal chain. Learning & Growth enables better Internal Processes, which improves the Customer experience, which drives Financial outcomes. A Strategy Map makes these cause-effect links explicit and visible.</p>
+        </div>
+        <div class="detail-block">
+          <h4>Building one</h4>
+          <ol class="steps-list">
+            <li>Start with the Financial perspective: what does success look like in 3 years?</li>
+            <li>Customer perspective: what must customers experience to drive those financial results?</li>
+            <li>Internal Processes: what processes must excel to deliver that customer experience?</li>
+            <li>Learning & Growth: what capabilities, systems, and culture enable those processes?</li>
+            <li>For each perspective, set 3–5 objectives with KPIs, targets, and initiatives</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>Public sector & NFP adaptation</h4>
+          <ul>
+            <li>Replace "Financial" with "Mission Impact" at the top — mission is the ultimate measure</li>
+            <li>Funders and community appear as dual Customer perspectives</li>
+            <li>Financial stewardship becomes a constraint (bottom), not the goal (top)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> A community health centre has a 3-year strategy to become the best primary care provider for low-income families in its region. Build a mini Balanced Scorecard — for each of the four perspectives, write one strategic objective and one KPI that would measure it.
+        </div>
+        <textarea class="practice-input" placeholder="Financial/Mission perspective:&#10;Objective: [e.g. Achieve financial sustainability while expanding access]&#10;KPI: [e.g. Operating surplus margin ≥ 5%]&#10;&#10;Customer perspective:&#10;Objective: ...&#10;KPI: ...&#10;&#10;Internal Processes:&#10;Objective: ...&#10;KPI: ...&#10;&#10;Learning & Growth:&#10;Objective: ...&#10;KPI: ...&#10;&#10;Causal logic check: How does your L&G objective ultimately drive your Financial objective?"></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'bsc')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-bsc">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cost-Benefit Analysis -->
+    <div class="fw-card" onclick="toggleCard(this, 'cba-detail')" data-name="Cost-Benefit Analysis" data-tags="economics decision making government value money NPV">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Economic Evaluation</div>
+      <div class="fw-name">Cost-Benefit Analysis (CBA)</div>
+      <div class="fw-short">Do the benefits outweigh the costs — to society, not just the organisation? The standard for government investment decisions.</div>
+      <div class="fw-tags"><span class="tag">Government</span><span class="tag">NPV</span><span class="tag">Policy</span></div>
+    </div>
+    <div class="fw-detail" id="cba-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>CBA vs business case vs SROI</h4>
+          <ul>
+            <li><strong>Business case:</strong> Does this make financial sense for our organisation?</li>
+            <li><strong>SROI:</strong> What social value is created per dollar invested?</li>
+            <li><strong>CBA:</strong> Do total social benefits (monetised) exceed total social costs? Takes a societal perspective — includes externalities the organisation doesn't bear</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>The core components</h4>
+          <ul>
+            <li><strong>Identify all costs:</strong> Capital, operating, transition, opportunity costs — over the full project life</li>
+            <li><strong>Identify all benefits:</strong> Direct, indirect, and spillover benefits to all affected parties</li>
+            <li><strong>Monetise both:</strong> Assign dollar values using market prices, shadow prices, or willingness-to-pay</li>
+            <li><strong>Discount to NPV:</strong> Apply discount rate (usually 7% in Australian govt) to make future values comparable</li>
+            <li><strong>BCR:</strong> Benefit-Cost Ratio = Total PV Benefits ÷ Total PV Costs. BCR &gt;1 = proceed</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>In Australian government context</h4>
+          <ol class="steps-list">
+            <li>The Australian Government's Investment Framework requires CBA for major projects</li>
+            <li>Standard discount rate: 7% real (Infrastructure Australia uses 4–10% range)</li>
+            <li>Sensitivity analysis is mandatory — test BCR under optimistic and pessimistic assumptions</li>
+            <li>Distributional analysis: who bears the costs and who gets the benefits?</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>Common traps</h4>
+          <ul>
+            <li>Double-counting benefits (e.g. counting GDP impact AND productivity gains separately when one causes the other)</li>
+            <li>Choosing a discount rate that makes the project look good</li>
+            <li>Ignoring option value — what's the value of being able to make a different decision later?</li>
+            <li>Treating a BCR of 1.01 as meaningfully different from 0.99 — it isn't, given uncertainty</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> The WA Government is evaluating a $50M investment in a statewide diabetes prevention program over 5 years. Structure a CBA: identify 3 categories of costs and 3 categories of benefits (with example monetisation approaches for each). Then identify the two assumptions whose uncertainty most affects the BCR.
+        </div>
+        <textarea class="practice-input" placeholder="Costs:&#10;1. [Category]: [e.g. Program delivery — $40M over 5 years]&#10;2. [Category]: ...&#10;3. [Category]: ...&#10;&#10;Benefits:&#10;1. [Category]: [e.g. Averted diabetes treatment costs — monetised using average treatment cost × cases prevented]&#10;2. [Category]: ...&#10;3. [Category]: ...&#10;&#10;Two most critical assumptions:&#10;1. ...&#10;2. ...&#10;&#10;Is a BCR > 1 likely here? My view: ..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'cba')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-cba">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /fw-grid cat-evaluation -->
+
+
+  <!-- ═══════════════════════════════════
+       SECTION 4: SCALE-UP
+  ══════════════════════════════════════ -->
+  <div class="section-header cat-scaleup" data-cat="scaleup">
+    <span class="section-label">Scale-Up</span>
+    <span class="section-title">Scale-Up Frameworks</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="fw-grid cat-scaleup" data-cat="scaleup">
+
+    <!-- Ansoff Matrix -->
+    <div class="fw-card" onclick="toggleCard(this, 'ansoff-detail')" data-name="Ansoff Matrix" data-tags="growth strategy market product expansion">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Growth Strategy</div>
+      <div class="fw-name">Ansoff Matrix</div>
+      <div class="fw-short">Four growth strategies mapped by market and product newness. Essential for scale-up decisions.</div>
+      <div class="fw-tags"><span class="tag">Growth</span><span class="tag">Markets</span><span class="tag">Products</span></div>
+    </div>
+    <div class="fw-detail" id="ansoff-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>The four quadrants</h4>
+          <ul>
+            <li><strong>Market Penetration:</strong> Existing product, existing market — lowest risk, sell more to current customers</li>
+            <li><strong>Market Development:</strong> Existing product, new market — moderate risk, find new customers for what you have</li>
+            <li><strong>Product Development:</strong> New product, existing market — moderate risk, innovate for known customers</li>
+            <li><strong>Diversification:</strong> New product, new market — highest risk, requires new capabilities in unfamiliar territory</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>How to use it</h4>
+          <p>Map your current strategic options against the matrix. Most organisations instinctively jump to diversification when they should double down on penetration first. The matrix forces an honest conversation about risk tolerance and capability.</p>
+        </div>
+        <div class="detail-block">
+          <h4>For social impact and public sector</h4>
+          <ol class="steps-list">
+            <li>Replace "product" with "program/service" and "market" with "community/geography"</li>
+            <li>Penetration: deepen reach in current communities</li>
+            <li>Market Development: take a proven program to a new population</li>
+            <li>Product Development: design a new service for existing beneficiaries</li>
+            <li>Diversification: new program for a new community — budget and evidence required</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>Scale-up discipline</h4>
+          <ul>
+            <li>Most failed scale-ups tried diversification when the penetration strategy wasn't yet exhausted</li>
+            <li>Always sequence: penetrate → develop market → develop product → diversify</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> A digital mental health platform operates in Australia and serves young adults aged 18–25. They have strong traction. Their board has listed four potential growth moves. Classify each using the Ansoff Matrix and recommend which to pursue first, with reasoning.<br><br>Options: (A) Increase marketing spend to get more 18–25s in Australia. (B) Launch in New Zealand. (C) Build a corporate wellbeing module for employers. (D) Launch a physical clinic network.
+        </div>
+        <textarea class="practice-input" placeholder="A: [Ansoff quadrant] because...&#10;B: [Ansoff quadrant] because...&#10;C: [Ansoff quadrant] because...&#10;D: [Ansoff quadrant] because...&#10;&#10;I recommend pursuing [X] first because..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'ansoff')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-ansoff">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scaling Readiness -->
+    <div class="fw-card" onclick="toggleCard(this, 'scalingreadiness-detail')" data-name="Scaling Readiness Assessment" data-tags="scale readiness capacity systems">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Scale-Up Planning</div>
+      <div class="fw-name">Scaling Readiness Assessment</div>
+      <div class="fw-short">Are you actually ready to scale? A structured diagnostic across people, process, systems, and capital.</div>
+      <div class="fw-tags"><span class="tag">Readiness</span><span class="tag">Capacity</span><span class="tag">Diagnostic</span></div>
+    </div>
+    <div class="fw-detail" id="scalingreadiness-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>The four readiness domains</h4>
+          <ul>
+            <li><strong>People:</strong> Do you have the leadership, skills, and culture to scale without breaking?</li>
+            <li><strong>Process:</strong> Are your core processes documented, repeatable, and transferable?</li>
+            <li><strong>Systems:</strong> Can your technology and data infrastructure handle volume growth?</li>
+            <li><strong>Capital:</strong> Do you have the financial runway to absorb scale-up costs before revenue catches up?</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>The readiness paradox</h4>
+          <p>Many organisations are market-ready before they're internally ready. Scaling demand faster than operational capacity creates service quality failures that damage the very reputation you're trying to build. Pace your external growth to your internal build rate.</p>
+        </div>
+        <div class="detail-block">
+          <h4>Assessment approach</h4>
+          <ol class="steps-list">
+            <li>Rate each domain: Ready to Scale / Needs Strengthening / Not Ready</li>
+            <li>For each "Needs Strengthening" area, identify the specific gap and the time/cost to close it</li>
+            <li>Identify your single biggest constraint — the bottleneck that limits overall speed</li>
+            <li>Build your scale-up roadmap around resolving the bottleneck first</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>Social enterprise addition</h4>
+          <ul>
+            <li>Add a fifth domain: <strong>Evidence:</strong> Is your model evidence-based enough to defend at scale?</li>
+            <li>Funders and governments will demand proof before they fund scale</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> A community legal centre has been offered government funding to expand from 2 offices to 8 offices over 18 months. Assess their scaling readiness across the four domains (assume they have 12 staff, informal processes, a basic case management system, and 6 months of reserves). Rate each domain and identify the single biggest bottleneck.
+        </div>
+        <textarea class="practice-input" placeholder="People: [Ready / Needs Strengthening / Not Ready] — because...&#10;Process: [Ready / Needs Strengthening / Not Ready] — because...&#10;Systems: [Ready / Needs Strengthening / Not Ready] — because...&#10;Capital: [Ready / Needs Strengthening / Not Ready] — because...&#10;&#10;Biggest bottleneck: ...&#10;My recommendation: ..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'scalingreadiness')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-scalingreadiness">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /fw-grid cat-scaleup -->
+
+
+  <!-- ═══════════════════════════════════
+       SECTION 5: MONITORING & IMPACT
+  ══════════════════════════════════════ -->
+  <div class="section-header cat-monitoring" data-cat="monitoring">
+    <span class="section-label">Monitoring & Impact</span>
+    <span class="section-title">Monitoring & Impact Measurement</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="fw-grid cat-monitoring" data-cat="monitoring">
+
+    <!-- OKRs -->
+    <div class="fw-card" onclick="toggleCard(this, 'okr-detail')" data-name="OKRs" data-tags="objectives key results measurement performance goals">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Performance Management</div>
+      <div class="fw-name">OKRs (Objectives & Key Results)</div>
+      <div class="fw-short">Ambitious goals linked to measurable evidence. How Google, Intel, and mission-driven organisations align teams to outcomes.</div>
+      <div class="fw-tags"><span class="tag">Goals</span><span class="tag">Alignment</span><span class="tag">Cadence</span></div>
+    </div>
+    <div class="fw-detail" id="okr-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>The structure</h4>
+          <ul>
+            <li><strong>Objective:</strong> Qualitative, inspirational, directional. Answers "where do we want to go?" — memorable, not measurable</li>
+            <li><strong>Key Results:</strong> 2–5 per objective. Quantitative, time-bound, specific. Answers "how will we know we got there?"</li>
+            <li><strong>Initiatives:</strong> The actual work (projects, tasks) that drive the key results — separate from the OKR itself</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Good OKR vs bad OKR</h4>
+          <ul>
+            <li>Bad KR: "Improve patient satisfaction" — not measurable</li>
+            <li>Good KR: "Increase patient satisfaction NPS from 42 to 60 by Q4" — specific, measurable, time-bound</li>
+            <li>Bad O: "Work on digital transformation" — not inspiring or directional</li>
+            <li>Good O: "Become the most digitally enabled community health service in the state"</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Cadence</h4>
+          <ol class="steps-list">
+            <li>Annual OKRs set direction</li>
+            <li>Quarterly OKRs operationalise the plan</li>
+            <li>Monthly check-ins track progress (1–10 scale or traffic light)</li>
+            <li>Weekly team standups connect daily work to KRs</li>
+            <li>End-of-quarter retrospective: what drove the result?</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>The 70% rule</h4>
+          <p>In OKR culture, consistently scoring 100% means your targets are too easy. Aim to hit 70–80%. If a team consistently scores below 40%, the objective needs to change, not just the effort. This changes the cultural relationship with ambition and failure.</p>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> You're helping a homelessness service organisation set its Q3 OKRs. Their annual goal is to move 150 people into stable long-term housing. Write one Objective and three Key Results for the quarter. Then identify one initiative (action) for each Key Result.
+        </div>
+        <textarea class="practice-input" placeholder="Objective: [inspiring, directional]&#10;&#10;KR1: [measurable, specific, time-bound]&#10;  Initiative: [the actual work]&#10;&#10;KR2: ...&#10;  Initiative: ...&#10;&#10;KR3: ...&#10;  Initiative: ..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'okr')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-okr">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Theory of Change -->
+    <div class="fw-card" onclick="toggleCard(this, 'toc-detail')" data-name="Theory of Change" data-tags="impact evaluation social change pathway">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Impact Framework</div>
+      <div class="fw-name">Theory of Change</div>
+      <div class="fw-short">If we do X, then Y will happen, because Z. Making your impact assumptions explicit and testable.</div>
+      <div class="fw-tags"><span class="tag">Social Impact</span><span class="tag">NFP</span><span class="tag">Government</span></div>
+    </div>
+    <div class="fw-detail" id="toc-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>What it is</h4>
+          <p>A Theory of Change (ToC) is a comprehensive description of how and why a desired change is expected to happen in a particular context. It makes explicit the causal chain from activities to long-term impact — and the assumptions that must hold for each link in the chain.</p>
+        </div>
+        <div class="detail-block">
+          <h4>ToC vs Logic Model</h4>
+          <ul>
+            <li><strong>Logic Model:</strong> Describes what the program does and what it expects to produce</li>
+            <li><strong>Theory of Change:</strong> Explains <em>why</em> those activities will produce those outcomes — the mechanism</li>
+            <li>A ToC precedes a logic model. The logic model operationalises the ToC.</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Building a ToC</h4>
+          <ol class="steps-list">
+            <li>Define the long-term outcome (the change in the world you want)</li>
+            <li>Identify the preconditions that must be in place for that outcome to occur</li>
+            <li>Map backwards: what needs to happen first for each precondition?</li>
+            <li>At each arrow, write the assumption: "This leads to this IF..."</li>
+            <li>Identify which assumptions are most uncertain — these are your evaluation priorities</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>The power of making assumptions explicit</h4>
+          <ul>
+            <li>Most program failures trace to an assumption that was never tested</li>
+            <li>A ToC turns "trust us" into "here's exactly what we believe and why"</li>
+            <li>It gives funders and evaluators a roadmap of where to probe</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>A note on related treatments in this series</h4>
+          <p>This entry is written from a programme design and evaluation lens — useful for NGOs and government services building or assessing their own programmes. The Impact Investing Playbook has a companion entry, <em>Theory of Change (Investor Lens)</em>, that applies the same underlying logic from a capital allocator's seat, with the investor's own contribution made explicit as a distinct, testable link in the chain.</p>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> A school-based nutrition program provides free healthy lunches to all students at 10 low-income primary schools. The long-term outcome is improved academic performance. Build a simplified Theory of Change — work backwards from the outcome and identify 3 intermediate steps and the key assumption at each step.
+        </div>
+        <textarea class="practice-input" placeholder="Long-term outcome: Improved academic performance in low-income schools&#10;&#10;Intermediate step 3 (closest to outcome): Students concentrate better in class&#10;  Assumption: Better concentration leads to better learning IF teaching quality is maintained&#10;&#10;Intermediate step 2: Students have sustained energy throughout the school day&#10;  Assumption: ...&#10;&#10;Intermediate step 1 (closest to activity): Students eat the nutritious meals provided&#10;  Assumption: ..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'toc')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-toc">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SROI -->
+    <div class="fw-card" onclick="toggleCard(this, 'sroi-detail')" data-name="SROI" data-tags="social return on investment impact measurement value">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Impact Measurement</div>
+      <div class="fw-name">Social Return on Investment (SROI)</div>
+      <div class="fw-short">For every $1 invested, $X of social value was created. Turning social outcomes into a comparable ratio.</div>
+      <div class="fw-tags"><span class="tag">Finance</span><span class="tag">Value</span><span class="tag">Evidence</span></div>
+    </div>
+    <div class="fw-detail" id="sroi-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>What it is</h4>
+          <p>SROI is a framework for measuring and communicating the social, environmental, and economic value created by a program or organisation relative to the resources invested. The output is a ratio: "$3.50 of social value for every $1 invested."</p>
+        </div>
+        <div class="detail-block">
+          <h4>The six SROI principles</h4>
+          <ul>
+            <li>Involve stakeholders</li>
+            <li>Understand what changes</li>
+            <li>Value the things that matter</li>
+            <li>Only include what is material</li>
+            <li>Do not over-claim</li>
+            <li>Be transparent</li>
+            <li>Verify the result</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Key adjustments</h4>
+          <ol class="steps-list">
+            <li><strong>Deadweight:</strong> What would have happened anyway without the program?</li>
+            <li><strong>Attribution:</strong> How much of the change is due to your program vs others?</li>
+            <li><strong>Displacement:</strong> Did improving outcomes here worsen them elsewhere?</li>
+            <li><strong>Drop-off:</strong> Does the impact reduce over time?</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>Honest limitations</h4>
+          <ul>
+            <li>SROI ratios are highly sensitive to financial proxies — be transparent about choices</li>
+            <li>High SROI claims (&gt;10:1) are usually overstated — scrutinise assumptions</li>
+            <li>Useful for communication and internal improvement, not as hard evidence</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> A job-readiness program costs $500,000/year and supports 100 long-term unemployed people. 60 find stable employment within 6 months. Describe how you would approach calculating the SROI — what financial proxies would you use for the social value, and how would you apply deadweight and attribution adjustments?
+        </div>
+        <textarea class="practice-input" placeholder="Social value outcomes to value:&#10;1. Employment income gained [proxy: average annual salary for this cohort]&#10;2. Reduced government benefits payments [proxy: ...]&#10;3. ...&#10;&#10;Deadweight: Without this program, approximately [X]% of this cohort might have found employment anyway because...&#10;&#10;Attribution: This program can claim approximately [X]% of the outcome because... &#10;&#10;Indicative SROI: ..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'sroi')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-sroi">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPI Framework -->
+    <div class="fw-card" onclick="toggleCard(this, 'kpi-detail')" data-name="KPI Framework" data-tags="metrics measurement performance indicators monitoring">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Monitoring</div>
+      <div class="fw-name">KPI Framework Design</div>
+      <div class="fw-short">Not all metrics are KPIs. Designing a measurement system that drives the right behaviour — not just reporting.</div>
+      <div class="fw-tags"><span class="tag">Metrics</span><span class="tag">Dashboard</span><span class="tag">Governance</span></div>
+    </div>
+    <div class="fw-detail" id="kpi-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>KPIs vs metrics vs activities</h4>
+          <ul>
+            <li><strong>Activity:</strong> "Number of meetings held" — you control this, it doesn't tell you if it worked</li>
+            <li><strong>Metric:</strong> "Customer satisfaction score" — important but not always critical</li>
+            <li><strong>KPI:</strong> A metric that is critical to the achievement of a strategic objective, tracked on a defined cadence with a clear owner and target</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Leading vs lagging indicators</h4>
+          <ul>
+            <li><strong>Lagging:</strong> Measure outcomes that have already occurred — can't be changed (revenue, final health outcomes)</li>
+            <li><strong>Leading:</strong> Predict future performance — can be influenced now (sales pipeline, early health indicators)</li>
+            <li>A good KPI framework has both — lagging to verify, leading to guide</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>The SMART test for KPIs</h4>
+          <ol class="steps-list">
+            <li><strong>Specific:</strong> Clear enough that two people measuring it get the same number</li>
+            <li><strong>Measurable:</strong> Data exists or can be collected feasibly</li>
+            <li><strong>Achievable:</strong> Ambitious but credible</li>
+            <li><strong>Relevant:</strong> Directly linked to a strategic objective</li>
+            <li><strong>Time-bound:</strong> Has a clear review cadence and target date</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>Goodhart's Law — the fundamental warning</h4>
+          <p><em>"When a measure becomes a target, it ceases to be a good measure."</em> Once you measure something, people optimise for it. Design KPIs that are hard to game — and pair them with qualitative sense-checks.</p>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> A public hospital is trying to improve emergency department performance. Their current only KPI is "average wait time." Design a more complete KPI framework with 4 KPIs — at least 2 leading and 2 lagging — each with an owner role, target, and measurement cadence.
+        </div>
+        <textarea class="practice-input" placeholder="KPI 1: [Name] | Type: Leading/Lagging | Target: [...] | Owner: [...] | Cadence: [weekly/monthly/quarterly]&#10;&#10;KPI 2: ...&#10;&#10;KPI 3: ...&#10;&#10;KPI 4: ...&#10;&#10;Goodhart's Law risk: Which KPI is most at risk of being gamed, and how?"></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'kpi')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-kpi">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /fw-grid cat-monitoring -->
+
+  <div class="section-divider"></div>
+
+  <!-- ═══════════════════════════════════
+       SECTION 6: CASE INTERVIEWS
+  ══════════════════════════════════════ -->
+  <div class="section-header cat-caseinterview" data-cat="caseinterview">
+    <span class="section-label">Case Interviews</span>
+    <span class="section-title">Case Interview Frameworks</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="fw-grid cat-caseinterview" data-cat="caseinterview">
+
+    <!-- Profitability Framework -->
+    <div class="fw-card" onclick="toggleCard(this, 'profit-detail')" data-name="Profitability Framework" data-tags="case interview profit revenue cost margin decline">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Case Interview</div>
+      <div class="fw-name">Profitability Framework</div>
+      <div class="fw-short">Profits = Revenue − Costs. Deceptively simple — the most common case type and the most important to master cold.</div>
+      <div class="fw-tags"><span class="tag">MBB Cases</span><span class="tag">Revenue</span><span class="tag">Costs</span></div>
+    </div>
+    <div class="fw-detail" id="profit-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>The full decomposition</h4>
+          <ul>
+            <li><strong>Revenue:</strong> Price × Volume
+              <br>— Price: list price, discounts, price mix across segments
+              <br>— Volume: # customers × purchase frequency × units per purchase</li>
+            <li><strong>Costs:</strong> Fixed + Variable
+              <br>— Fixed: rent, salaries, depreciation (don't change with volume)
+              <br>— Variable: COGS, commissions, logistics (scale with volume)</li>
+            <li><strong>Profit:</strong> Revenue − Total Costs (absolute) or Margin % (relative)</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>The drill-down discipline</h4>
+          <p>Never just say "revenue declined." Ask: <em>which</em> revenue? All products? One segment? One geography? One channel? The interviewer rewards systematic narrowing — not jumping to solutions before finding the root cause.</p>
+        </div>
+        <div class="detail-block">
+          <h4>Common case structures</h4>
+          <ol class="steps-list">
+            <li>Clarify: is profit down because revenue fell, costs rose, or both?</li>
+            <li>If revenue: is it price or volume? If volume: which product/segment/channel?</li>
+            <li>If costs: fixed or variable? Which cost line specifically?</li>
+            <li>Benchmark: is this industry-wide or company-specific?</li>
+            <li>Synthesise: what's the most likely root cause given all data?</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>Classic traps</h4>
+          <ul>
+            <li>Jumping to solutions ("cut costs!") before diagnosing the cause</li>
+            <li>Forgetting to check if it's an industry problem vs company problem</li>
+            <li>Not asking for data — push to quantify every branch</li>
+            <li>Ignoring timing: did anything change when the problem started?</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Case:</strong> Your client is a private radiology group. Net profit margin has fallen from 22% to 14% over 2 years, despite flat revenue. Walk through your profitability framework — structure your diagnosis, identify the 3 most likely hypotheses for the margin compression, and list the data you'd request to test each one.
+        </div>
+        <textarea class="practice-input" placeholder="Structure: Profit = Revenue − Costs. Revenue is flat, so the issue is on the cost side.&#10;&#10;Cost breakdown:&#10;Fixed costs to examine: ...&#10;Variable costs to examine: ...&#10;&#10;My 3 hypotheses:&#10;1. [e.g. Labour costs have risen due to staff shortages / specialist wage inflation]&#10;   Data needed: ...&#10;2. ...&#10;   Data needed: ...&#10;3. ...&#10;   Data needed: ...&#10;&#10;My prioritised starting point: ..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'profit')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-profit">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Market Sizing -->
+    <div class="fw-card" onclick="toggleCard(this, 'marketsize-detail')" data-name="Market Sizing" data-tags="case interview estimation market size TAM SAM calculation">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Case Interview</div>
+      <div class="fw-name">Market Sizing</div>
+      <div class="fw-short">How big is the market for X in Australia? Structure beats accuracy — show your reasoning, not just a number.</div>
+      <div class="fw-tags"><span class="tag">Estimation</span><span class="tag">TAM</span><span class="tag">Fermi</span></div>
+    </div>
+    <div class="fw-detail" id="marketsize-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>Two approaches</h4>
+          <ul>
+            <li><strong>Top-down:</strong> Start with total population → segment → filter → apply penetration rate → multiply by value per customer. Fast but assumption-heavy.</li>
+            <li><strong>Bottom-up:</strong> Start with supply-side (# providers × capacity × utilisation × price). Often more defensible.</li>
+            <li>Use both and triangulate — if they agree, you're probably in the right range.</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Australian reference numbers to know</h4>
+          <ul>
+            <li>Population: ~27 million</li>
+            <li>Households: ~10 million (avg 2.5 people)</li>
+            <li>Working age (15–64): ~17 million</li>
+            <li>GDP: ~$2.6 trillion; GDP per capita ~$65K</li>
+            <li>Average household income: ~$110K</li>
+            <li>Healthcare % of GDP: ~10% (~$260B total)</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>The discipline</h4>
+          <ol class="steps-list">
+            <li>Define what you're sizing precisely — TAM, SAM, or SOM?</li>
+            <li>Choose your approach (top-down or bottom-up) and explain why</li>
+            <li>Make your assumptions explicit — say them out loud</li>
+            <li>Do the arithmetic clearly (interviewers watch this)</li>
+            <li>Sense-check: does the number feel right? Cross-check with a different angle</li>
+            <li>Round appropriately — never claim false precision</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>What interviewers reward</h4>
+          <ul>
+            <li>A clear, logical structure — not the exact right answer</li>
+            <li>Explicit, reasonable assumptions stated confidently</li>
+            <li>Catching your own errors and correcting them</li>
+            <li>A sanity check at the end: "This implies X revenue per provider, which seems plausible because..."</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Case:</strong> Estimate the size of the Australian private physiotherapy market (annual revenue). Show your full working — choose top-down or bottom-up, state every assumption explicitly, do the calculation, and sense-check your answer.
+        </div>
+        <textarea class="practice-input" placeholder="Approach: I'll use [top-down / bottom-up] because...&#10;&#10;[Top-down example]&#10;Australian population: 27M&#10;Adults likely to seek physio: [% and reasoning]&#10;Average visits per year for those who go: [assumption]&#10;Average cost per visit: [assumption]&#10;&#10;Calculation: 27M × [%] × [visits] × [$] = $[X]B&#10;&#10;Sense check: This implies [X] physio practices nationally, which [seems high/low/reasonable] because...&#10;&#10;My estimate: ~$[X]B per year"></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'marketsize')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-marketsize">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BCG Growth-Share Matrix -->
+    <div class="fw-card" onclick="toggleCard(this, 'bcgmatrix-detail')" data-name="BCG Growth-Share Matrix" data-tags="portfolio strategy stars cash cows dogs question marks BCG">
+      <span class="fw-arrow">›</span>
+      <div class="fw-type">Portfolio Strategy</div>
+      <div class="fw-name">BCG Growth-Share Matrix</div>
+      <div class="fw-short">Stars, Cash Cows, Question Marks, Dogs. The original portfolio strategy framework — still the clearest language for resource allocation.</div>
+      <div class="fw-tags"><span class="tag">BCG</span><span class="tag">Portfolio</span><span class="tag">Investment</span></div>
+    </div>
+    <div class="fw-detail" id="bcgmatrix-detail">
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4>The four quadrants</h4>
+          <ul>
+            <li><strong>Stars</strong> (high growth, high share): Market leaders in growing markets. Invest heavily — they become tomorrow's Cash Cows.</li>
+            <li><strong>Cash Cows</strong> (low growth, high share): Dominant in mature markets. Generate cash; harvest to fund Stars and Question Marks.</li>
+            <li><strong>Question Marks / Problem Children</strong> (high growth, low share): Need investment to compete; unclear if they'll become Stars or Dogs. Decide: invest or divest.</li>
+            <li><strong>Dogs</strong> (low growth, low share): Weak position in declining market. Divest or restructure unless they serve a strategic purpose.</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>The cash flow logic</h4>
+          <p>Cash Cows generate excess cash. That cash funds Question Marks that might become Stars. Stars eventually mature into Cash Cows. Dogs drain cash and should be divested. The healthy portfolio has Cash Cows funding the future, not subsidising the past.</p>
+        </div>
+        <div class="detail-block">
+          <h4>How to use it</h4>
+          <ol class="steps-list">
+            <li>Define your market clearly — relative market share means share vs your largest competitor</li>
+            <li>Plot each business unit or product line on the matrix</li>
+            <li>Assess cash flow generation and requirement for each quadrant</li>
+            <li>Recommend portfolio rebalancing: invest, hold, harvest, or divest</li>
+            <li>Show how cash flows between quadrants in your proposed strategy</li>
+          </ol>
+        </div>
+        <div class="detail-block">
+          <h4>Limitations to acknowledge</h4>
+          <ul>
+            <li>Market share ≠ competitive advantage in all industries</li>
+            <li>Dogs can be strategically important (loss-leaders, complements, regulatory requirements)</li>
+            <li>Two dimensions oversimplify complex portfolio decisions</li>
+            <li>The GE-McKinsey 9-box is an upgrade when more nuance is needed</li>
+          </ul>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-header">
+          <span class="practice-badge">Practice Mode</span>
+          <h4>Apply the framework</h4>
+        </div>
+        <div class="practice-scenario">
+          <strong>Scenario:</strong> A diversified health company has four business units: (A) Aged care facilities — #1 market share, slow-growing sector; (B) Telehealth platform — #3 market share, rapidly growing sector; (C) Pathology labs — #2 share, mature market; (D) Wellness apps — small share in a booming but crowded market. Classify each, recommend a portfolio strategy, and identify the key strategic decision the CEO faces.
+        </div>
+        <textarea class="practice-input" placeholder="A (Aged care): [Star/Cash Cow/Question Mark/Dog] because...&#10;B (Telehealth): [Star/Cash Cow/Question Mark/Dog] because...&#10;C (Pathology): [Star/Cash Cow/Question Mark/Dog] because...&#10;D (Wellness apps): [Star/Cash Cow/Question Mark/Dog] because...&#10;&#10;Portfolio strategy:&#10;- Harvest [X] to fund [Y]&#10;- Decision on [Q] because...&#10;&#10;Key CEO decision: ..."></textarea>
+        <button class="practice-btn" onclick="getAIFeedback(this, 'bcgmatrix')">Get AI Feedback ›</button>
+        <div class="ai-response" id="ai-resp-bcgmatrix">
+          <div class="ai-response-label">AI Coach Feedback</div>
+          <div class="ai-resp-content"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /fw-grid cat-caseinterview -->
+
+  <div class="section-divider"></div>
+
+</div><!-- /main -->
+
+<!-- FOOTER -->
+<footer>
+  <p>A living notebook. Last updated June 2026 · Built for practice, not just reference · <a href="https://github.com/bwtwong" target="_blank">GitHub ↗</a></p>
+  <p style="margin-top:0.5rem; font-size:0.72rem; opacity:0.6">AI practice feedback powered by Claude (Anthropic) · Frameworks drawn from McKinsey, BCG, Bain, and public sector consulting practice · This is a practitioner's notebook, not a certified training resource</p>
+</footer>
+
+<script>
+// ─── CARD TOGGLE ───────────────────────────────────────
+function toggleCard(card, detailId) {
+  const detail = document.getElementById(detailId);
+  const isOpen = card.classList.contains('open');
+
+  // close all cards
+  document.querySelectorAll('.fw-card.open').forEach(c => {
+    c.classList.remove('open');
+    c.setAttribute('aria-expanded', 'false');
+  });
+  document.querySelectorAll('.fw-detail.open').forEach(d => d.classList.remove('open'));
+
+  if (!isOpen) {
+    card.classList.add('open');
+    card.setAttribute('aria-expanded', 'true');
+    detail.classList.add('open');
+    setTimeout(() => detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+  }
+}
+
+// ─── ACCESSIBILITY RETROFIT ────────────────────────────
+// Makes every framework card keyboard-operable and screen-reader legible:
+// role="button", tabindex for focus order, aria-expanded for state,
+// and Enter/Space activation matching native button behaviour.
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.fw-card').forEach(card => {
+    card.setAttribute('role', 'button');
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('aria-expanded', 'false');
+    const nameEl = card.querySelector('.fw-name');
+    if (nameEl) card.setAttribute('aria-label', `${nameEl.textContent.trim()} — expand details`);
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        card.click();
+      }
+    });
+  });
+});
+
+// ─── CATEGORY FILTER ───────────────────────────────────
+function filterCat(cat, btn) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const sections = document.querySelectorAll('.section-header, .fw-grid');
+  sections.forEach(el => {
+    if (cat === 'all') {
+      el.classList.remove('hidden');
+    } else {
+      el.classList.toggle('hidden', el.dataset.cat !== cat);
+    }
+  });
+
+  // close all open cards
+  document.querySelectorAll('.fw-card.open').forEach(c => c.classList.remove('open'));
+  document.querySelectorAll('.fw-detail.open').forEach(d => d.classList.remove('open'));
+}
+
+// ─── SEARCH ────────────────────────────────────────────
+function searchFrameworks(query) {
+  const q = query.toLowerCase().trim();
+
+  // reset cat filter
+  if (q) {
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.section-header, .fw-grid').forEach(el => el.classList.remove('hidden'));
+  }
+
+  document.querySelectorAll('.fw-card').forEach(card => {
+    if (!q) {
+      card.classList.remove('hidden');
+      return;
+    }
+    const name = (card.dataset.name || '').toLowerCase();
+    const tags = (card.dataset.tags || '').toLowerCase();
+    const text = (card.innerText || '').toLowerCase();
+    card.classList.toggle('hidden', !name.includes(q) && !tags.includes(q) && !text.includes(q));
+  });
+}
+
+// ─── AI FEEDBACK ───────────────────────────────────────
+const frameworkContexts = {
+  mece: "You are a senior McKinsey consultant coaching a junior analyst on the MECE principle. The analyst has attempted to apply MECE to structure the problem of a retail bank's declining profits. Evaluate their response: (1) Are the categories truly mutually exclusive — no overlap? (2) Are they collectively exhaustive — no major category missing? (3) Are the categories at the same level of abstraction? Give specific, concrete feedback. Be warm but demanding. Keep response under 300 words.",
+  issuetree: "You are a consulting coach evaluating a junior analyst's diagnostic issue tree for why hospital patient satisfaction dropped 18%. Assess: (1) Are the Level 1 branches MECE? (2) Do the Level 2 sub-questions logically flow from Level 1? (3) Are there obvious branches missing? (4) Are the sub-questions specific enough to be answerable? Be encouraging but rigorous. Under 300 words.",
+  hypothesis: "You are a consulting senior evaluating a junior consultant's first hypothesis about a logistics company with rising operational costs. Assess: (1) Is the hypothesis specific and falsifiable? (2) Are the 2-3 pieces of evidence they'd look at genuinely the best 'kill criteria' — the things that would prove the hypothesis wrong? (3) Is the approach efficient? Under 250 words.",
+  pyramid: "You are a communications coach evaluating a consultant's pyramid-structure presentation to a CFO about exiting the European market. Assess: (1) Is the SCQA crisp — does the Situation establish shared context, does the Complication create urgency, does the Question flow logically, does the Answer actually answer it? (2) Are the 3 supporting arguments parallel and at the same level? (3) Does it feel like executive communication or like a research report? Under 300 words.",
+  matrix: "You are a strategy consultant reviewing a 2x2 matrix applied to prioritising digital transformation initiatives. Assess: (1) Are the two chosen axes genuinely independent? (2) Are the quadrant names action-oriented? (3) Does the placement rationale make sense? (4) Is the prioritisation recommendation defensible? Under 250 words.",
+  stakeholder: "You are a change management consultant reviewing a stakeholder map for consolidating community health centres. Assess: (1) Are the 5 stakeholders well-chosen — covering the key power dynamics? (2) Is the power/interest placement credible? (3) Is the disposition assessment realistic? (4) Is the engagement approach for the most critical stakeholder specific and actionable? Under 300 words.",
+  raci: "You are a consulting project manager reviewing a RACI matrix for implementing a patient data system. Check: (1) Is there exactly ONE Accountable person per task row — never zero, never two? (2) Are the Responsible assignments credible given the roles? (3) Are the Consulted and Informed roles appropriate — not over-consulted, not under-informed? Flag any structural RACI errors clearly. Under 300 words.",
+  changecurve: "You are an organisational psychologist coaching a consultant on change management. They've diagnosed where a government agency merger workforce sits on the Kübler-Ross curve and proposed three interventions. Assess: (1) Is the diagnosis credible given the described symptoms? (2) Are the three interventions matched to that stage? (3) Are they specific enough to implement? Under 250 words.",
+  workplan: "You are a consulting engagement manager reviewing a junior consultant's work plan for a market entry strategy. Assess: (1) Do the milestones connect logically to each other? (2) Are the analyses under each milestone genuinely what's needed to achieve it? (3) Is the phasing realistic? (4) Are owner roles clear and single-threaded? Under 300 words.",
+  logicmodel: "You are a social impact evaluator reviewing a logic model for a youth mentoring program. Assess: (1) Is the Output vs Outcome distinction correctly understood? (2) Does each element logically flow to the next? (3) Is the stated assumption about Activities → Outcomes reasonable and testable? (4) Is the Impact claim appropriately ambitious but not overclaimed? Under 300 words.",
+  kirkpatrick: "You are an evaluation specialist reviewing a Kirkpatrick evaluation plan for a leadership development program. Assess: (1) Is the measurement method appropriate for each level? (2) Is the key question genuinely testing what that level is designed to assess? (3) Are Levels 3 and 4 treated with appropriate rigour — not just a post-program survey? Under 250 words.",
+  swot: "You are a strategy consultant reviewing a SWOT analysis for an aged care provider entering home care services. Assess: (1) Are the Strengths genuinely internal capabilities, not market conditions? (2) Are the Weaknesses honest — not sanitised? (3) Are the Opportunities external and actionable? (4) Are the Threats realistic for this sector? (5) Do the S+O and W+T strategic recommendations actually follow from the analysis? Under 300 words.",
+  ansoff: "You are a growth strategy consultant reviewing an Ansoff Matrix classification for a digital mental health platform. Assess: (1) Is each option correctly classified into the right Ansoff quadrant? (2) Does the recommended sequencing correctly prioritise lower-risk options first? (3) Is the reasoning sound? Flag any misclassifications and explain why. Under 250 words.",
+  scalingreadiness: "You are a scaling strategy consultant reviewing a readiness assessment for a community legal centre expanding from 2 to 8 offices. Assess: (1) Is each domain rating credible given the details provided? (2) Is the bottleneck identification correct? (3) Is the recommendation specific and actionable? Point out any readiness risks they may have underweighted. Under 300 words.",
+  okr: "You are an OKR coach reviewing quarterly OKRs for a homelessness service organisation. Assess: (1) Is the Objective inspiring and directional — not just a rephrased metric? (2) Are the Key Results specific, measurable, and time-bound? (3) Are the Initiatives clearly separate from the Key Results — they are the 'how', not the 'what'? (4) Are the targets ambitious but achievable (aim for 70-80% achievability)? Under 300 words.",
+  toc: "You are a Theory of Change specialist reviewing a simplified ToC for a school nutrition program targeting academic performance. Assess: (1) Does the causal chain from free lunches to academic performance hold up? (2) Are the intermediate steps plausible and sequenced correctly? (3) Are the assumptions specific and testable — not generic? (4) Which assumption is the most uncertain and why? Under 300 words.",
+  sroi: "You are a social value specialist reviewing an SROI approach for a job-readiness program. Assess: (1) Are the social value outcomes appropriate and not double-counted? (2) Are the financial proxies reasonable for this context? (3) Is the deadweight estimate credible — neither too low nor too high? (4) Is the attribution claim honest? Flag any over-claiming risks. Under 300 words.",
+  kpi: "You are a performance management consultant reviewing a KPI framework for an emergency department. Assess: (1) Are there genuinely at least 2 leading and 2 lagging indicators? (2) Are the targets SMART? (3) Are owner roles appropriate? (4) Is the cadence appropriate to each KPI's nature? (5) Is their Goodhart's Law risk identification accurate? Flag any KPIs that are actually activity measures in disguise. Under 300 words.",
+  porter: "You are a strategy consultant coaching a junior analyst on Porter's Five Forces applied to Australian residential aged care. Assess: (1) Is each force rating (H/M/L) credible given the actual industry dynamics? (2) Are the key drivers for each force specific and accurate — not generic? (3) Is the structural attractiveness conclusion well-supported? Flag any force they've misunderstood or underweighted. Under 300 words.",
+  sevens: "You are an organisational change consultant reviewing a McKinsey 7S diagnostic for a hospital network failing to adopt digital systems. Assess: (1) Have they correctly distinguished the Hard S's (already changed) from the Soft S's (likely misaligned)? (2) Is the diagnosis of the Soft S misalignments credible and specific? (3) Does the primary diagnosis correctly identify the root cause of low adoption? Be particularly rigorous on whether Shared Values and Style are treated as symptoms or root causes. Under 300 words.",
+  bmc: "You are a business model strategist reviewing a Business Model Canvas for a GP clinic transitioning to subscription-based chronic disease management. Assess: (1) Is the Customer Segment specific enough — not just 'patients'? (2) Does the Value Proposition actually describe what changes for chronic disease patients specifically? (3) Does the Revenue Stream answer address how the subscription pricing model changes cash flow and billing? (4) Are the new Key Activities genuinely different from fee-for-service? (5) Is the biggest model risk insightful? Under 300 words.",
+  horizons: "You are a McKinsey Three Horizons coach reviewing an analyst's horizon classification for a pathology company. Assess: (1) Is each activity correctly classified into the right horizon — common mistakes include putting incremental operational improvements in H2 or confusing 'emerging' with H3? (2) Is the resource allocation split appropriate given the company's apparent dependence on H1 revenue? (3) Is the H1 risk identification specific to the pathology commoditisation context? Under 250 words.",
+  valuechain: "You are an operations strategy consultant reviewing a Value Chain Analysis for a private hospital group with declining margins. Assess: (1) Are the primary activities genuinely primary (directly delivering care) and not support activities? (2) Is the activity identified for first investigation the most logically likely margin culprit given declining margins with growing volume? (3) Is the linkage identified actually a linkage (where the output of one activity is the input to another) rather than just two activities mentioned together? Under 300 words.",
+  bsc: "You are a strategy execution consultant reviewing a Balanced Scorecard for a community health centre. Assess: (1) Is each objective genuinely outcome-oriented and not an activity? (2) Is each KPI specific, measurable, and directly linked to its objective? (3) Does the student demonstrate understanding of the causal chain — does their L&G objective logically enable their Internal Process objective, which enables Customer, which enables Financial/Mission? (4) Is the NFP adaptation (mission at top, financial as constraint) reflected in the perspective framing? Under 300 words.",
+  cba: "You are a government economics consultant reviewing a Cost-Benefit Analysis structure for a diabetes prevention program in WA. Assess: (1) Are the three cost categories genuinely distinct and comprehensive — are any major cost categories missing? (2) Do the benefit categories include both direct (health cost savings) and indirect (productivity, carer burden) effects? (3) Are the monetisation approaches appropriate — do they use real, estimable proxies or vague hand-waving? (4) Are the two critical assumptions actually the ones that would most swing the BCR? Under 300 words.",
+  profit: "You are a case interview coach reviewing an analyst's profitability framework response for a radiology group with compressed margins. Assess: (1) Did they correctly identify that flat revenue means the problem is cost-side? (2) Are the three hypotheses plausible and specific to the radiology/healthcare context — not generic? (3) Is the data requested for each hypothesis genuinely the evidence that would confirm or kill that hypothesis? (4) Is the prioritised starting point well-reasoned? Under 300 words.",
+  marketsize: "You are a case interview coach reviewing a market sizing answer for the Australian private physiotherapy market. Assess: (1) Is the approach (top-down or bottom-up) appropriate and well-justified? (2) Are the key assumptions reasonable and explicitly stated — not hidden? (3) Is the arithmetic correct? (4) Is the sense-check a genuine cross-validation — does it use a different angle to confirm the estimate? (5) Does the final estimate fall within a defensible range (~$3–5B for this market)? Under 300 words.",
+  bcgmatrix: "You are a BCG matrix coach reviewing a portfolio classification for a diversified health company. Assess: (1) Is each BU classified correctly — critically, does the student understand that aged care is mature (Cash Cow if high share, Dog if low) and telehealth is high-growth but requires market share clarity? (2) Does the portfolio strategy correctly describe cash flows between quadrants? (3) Is the key CEO decision correctly identified as the Question Mark investment decision, not a generic strategy statement? Flag any classification errors with specific reasoning. Under 300 words.",
+  pestle: "You are a strategy consultant reviewing a PESTLE scan for an aged care provider considering regional WA expansion. Assess: (1) Is each of the six lenses populated with a genuinely specific, relevant factor rather than a generic placeholder? (2) Are the two flagged 'most material' factors actually the most consequential for THIS specific expansion decision, not just the most commonly cited PESTLE factors in general? (3) Does the response show understanding that PESTLE is about external/macro context, not internal capability? Under 280 words.",
+  rootcause: "You are a root cause analysis coach reviewing a 5 Whys exercise on rising prescription dispensing errors at a pharmacy chain. Assess: (1) Does each 'why' logically follow from the previous answer, building a real causal chain rather than jumping between unrelated ideas? (2) Did the analysis stop at a genuinely actionable root cause, or settle too early on a comfortable, surface-level answer (e.g. 'staff made mistakes' is not a root cause)? (3) Is the flagged point for data verification well-chosen — is it genuinely the riskiest assumption in the chain, where guessing instead of checking could send the whole analysis in the wrong direction? Under 280 words.",
+  gapanalysis: "You are a gap analysis coach reviewing a current-state/future-state exercise for reducing ED wait times from 4.2 to 2.5 hours. Assess: (1) Is the current state described with genuine evidence/specificity, not just restated from the prompt? (2) Is the gap named in the same units as the target (i.e. expressed as a time reduction, not vaguely)? (3) Are the two bridging actions genuinely capable of closing a gap of this size within 18 months, and are the owners appropriate for those specific actions? (4) Does the response avoid jumping to generic solutions ('improve efficiency') in favour of specific, sized interventions? Under 280 words."
+};
+
+async function getAIFeedback(btn, frameworkId) {
+  const section = btn.closest('.practice-section');
+  const textarea = section.querySelector('.practice-input');
+  const responseDiv = section.querySelector('.ai-response');
+  const contentDiv = section.querySelector('.ai-resp-content');
+
+  const userAnswer = textarea.value.trim();
+  if (!userAnswer || userAnswer.length < 20) {
+    textarea.style.borderColor = '#E07A7A';
+    setTimeout(() => textarea.style.borderColor = '', 2000);
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Analysing...';
+  responseDiv.classList.remove('visible');
+
+  try {
+    const systemPrompt = frameworkContexts[frameworkId] || "You are a consulting coach giving feedback on a student's framework application. Be specific, encouraging, and rigorous. Under 300 words.";
+
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-6",
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [
+          {
+            role: "user",
+            content: `Here is my response to the practice scenario:\n\n${userAnswer}`
+          }
+        ]
+      })
+    });
+
+    const data = await response.json();
+    const text = data.content?.[0]?.text || "Unable to generate feedback. Please try again.";
+
+    // Format the response
+    contentDiv.innerHTML = text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n\n/g, '</p><p>')
+      .replace(/\n/g, '<br>')
+      .replace(/^/, '<p>')
+      .replace(/$/, '</p>');
+
+    responseDiv.classList.add('visible');
+  } catch (err) {
+    contentDiv.innerHTML = '<p style="color:#E07A7A">Could not connect to AI feedback. Please check your connection and try again.</p>';
+    responseDiv.classList.add('visible');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Get AI Feedback ›';
+  }
+}
+</script>
+</body>
+</html>
